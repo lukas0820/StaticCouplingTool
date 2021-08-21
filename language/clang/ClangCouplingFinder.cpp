@@ -1,7 +1,3 @@
-//
-// Created by lukas on 11.08.21.
-//
-
 #include "ClangCouplingFinder.hpp"
 
 #include <clang/Tooling/Tooling.h>
@@ -59,6 +55,20 @@ void ClangCouplingFinder::execute()
         tool.run(clang::tooling::newFrontendActionFactory<language::cpp::CouplingFrontendAction>().get());
     }
 }
+
+void ClangCouplingFinder::registerCouplingCallback(size_t couplingId, language::CouplingCallback clb)
+{
+    if (clb)
+    {
+        this->callbackMap[couplingId] = clb;
+    }
+}
+
+void ClangCouplingFinder::unregisterCouplingCallback(size_t couplingId)
+{
+    this->callbackMap.erase(couplingId);
+}
+
 std::vector<std::string> ClangCouplingFinder::getSourceFiles() const
 {
     return sourceFiles;
@@ -68,4 +78,5 @@ void ClangCouplingFinder::setSourceFiles(const std::vector<std::string>& sourceF
 {
     this->sourceFiles = sourceFiles;
 }
+
 }  // namespace language::cpp

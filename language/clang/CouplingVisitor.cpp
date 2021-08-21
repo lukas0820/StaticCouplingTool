@@ -22,6 +22,7 @@ bool CouplingVisitor::VisitCallExpr(clang::CallExpr* call)
         static unsigned int count = 0;
         count++;
         clang::FunctionDecl* func_decl;
+
         if (call->getDirectCallee())
         {
             func_decl = call->getDirectCallee();
@@ -32,9 +33,9 @@ bool CouplingVisitor::VisitCallExpr(clang::CallExpr* call)
             {
                 std::string funcCall = func_decl->getNameInfo().getName().getAsString();
 
-                llvm::outs() << funcCall << "\n";
-                llvm::outs() << callerLocation.getFileEntry()->getName() << " -> "
-                             << declLocation.getFileEntry()->getName() << " " << count << "\n";
+                //                llvm::outs() << funcCall << "\n";
+                //                llvm::outs() << callerLocation.getFileEntry()->getName() << " -> "
+                //                             << declLocation.getFileEntry()->getName() << " " << count << "\n";
             }
         }
     }

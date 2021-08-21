@@ -7,7 +7,7 @@ CouplingASTConsumer::CouplingASTConsumer(clang::ASTContext* context) : visitor(c
 
 void CouplingASTConsumer::HandleTranslationUnit(clang::ASTContext& Context)
 {
-    visitor.TraverseDecl(Context.getTranslationUnitDecl());
+    this->visitor.TraverseDecl(Context.getTranslationUnitDecl());
 }
 
 }  // namespace language::cpp

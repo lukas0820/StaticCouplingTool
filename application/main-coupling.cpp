@@ -16,11 +16,12 @@ static llvm::cl::OptionCategory category("test");
 int main(int argc, const char** argv)
 {
     language::cpp::ClangCouplingFinder couplingFinder;
-    language::cpp::ClangCouplingFinder::InitStatus status = couplingFinder.init("/home/lukas/Desktop/linux-5.13.8");
+    language::cpp::ClangCouplingFinder::InitStatus status =
+        couplingFinder.init("/home/lukas/Documents/static-coupling/cmake-build-debug");
     if (status == language::cpp::ClangCouplingFinder::InitStatus::OK)
     {
         couplingFinder.execute();
     }
-    
+
     return 0;
 }

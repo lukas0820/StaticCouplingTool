@@ -3,6 +3,7 @@
 
 #include <clang/Tooling/CompilationDatabase.h>
 
+#include <map>
 #include <string>
 #include <vector>
 
@@ -54,6 +55,10 @@ public:
      */
     virtual void execute() override;
 
+    virtual void registerCouplingCallback(size_t couplingId, CouplingCallback clb) override;
+
+    virtual void unregisterCouplingCallback(size_t couplingId) override;
+
     /**
      * @brief Get the list of source file paths to be analyzed.
      * @return list of source files
@@ -69,6 +74,12 @@ public:
 
 
 private:
+    void receiveCallback(coupling::AbstractCoupling* coupling);
+
+
+private:
+    std::map<size_t, language::CouplingCallback> callbackMap;
+
     /**
      * @brief Current initialization status.
      */
