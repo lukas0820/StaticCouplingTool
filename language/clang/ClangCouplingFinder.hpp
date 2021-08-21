@@ -13,11 +13,14 @@ namespace language::cpp
 class ClangCouplingFinder : public language::ICouplingFinder
 {
 public:
+    /**
+     * @brief Statuses of initialization.
+     */
     enum class InitStatus
     {
-        OK,
-        FAILED,
-        NOT_INITIALIZED
+        OK,             /*!< initialization was successful */
+        FAILED,         /*!< initialization failed */
+        NOT_INITIALIZED /*!< init not called yet */
     };
 
     /**
