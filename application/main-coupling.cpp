@@ -15,23 +15,12 @@ static llvm::cl::OptionCategory category("test");
 
 int main(int argc, const char** argv)
 {
-    QDirIterator it("/home/lukas/Desktop/linux-5.13.8", QDirIterator::Subdirectories);
-
-    std::vector<std::string> files;
-    while (it.hasNext())
+    language::cpp::ClangCouplingFinder couplingFinder;
+    language::cpp::ClangCouplingFinder::InitStatus status = couplingFinder.init("/home/lukas/Desktop/linux-5.13.8");
+    if (status == language::cpp::ClangCouplingFinder::InitStatus::OK)
     {
-        QString fileName = it.next();
-        if (fileName.endsWith(".hpp") || fileName.endsWith(".cpp") || fileName.endsWith(".c") ||
-            fileName.endsWith(".h"))
-        {
-            files.push_back(fileName.toStdString());
-        }
+        couplingFinder.execute();
     }
-
-
-    ClangCouplingFinder couplingFinder("/home/lukas/Desktop/linux-5.13.8", files);
-    couplingFinder.execute();
-
-
+    
     return 0;
 }

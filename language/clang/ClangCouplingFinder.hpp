@@ -1,27 +1,86 @@
-//
-// Created by lukas on 11.08.21.
-//
-
 #ifndef STATICCPPCOUPLING_CLANGCOUPLINGFINDER_HPP
 #define STATICCPPCOUPLING_CLANGCOUPLINGFINDER_HPP
+
+#include <clang/Tooling/CompilationDatabase.h>
 
 #include <string>
 #include <vector>
 
 #include "ICouplingFinder.hpp"
 
-
+namespace language::cpp
+{
 class ClangCouplingFinder : public language::ICouplingFinder
 {
 public:
-    ClangCouplingFinder(const std::string& compilationDatabaseDir, const std::vector<std::string>& sourceFiles);
+    enum class InitStatus
+    {
+        OK,
+        FAILED,
+        NOT_INITIALIZED
+    };
 
+    /**
+     * @brief Constructor.
+     */
+    ClangCouplingFinder();
+
+    /**
+     * @brief Initialize
+     * Parses the compilation database and returns its result and sets
+     * @param compilationDatabaseDir path to directory which includes JSON file of compilation database
+     * @return status of initialization
+     */
+    InitStatus init(const std::string& compilationDatabaseDir);
+
+    /**
+     * @brief Gets the current initialization status
+     */
+    InitStatus getInitStatus() const;
+
+    /**
+     * @brief Get all files from the compilation database.
+     * Function can be used after successful initialization, otherwise the empty list is returned
+     *
+     * @return list of files from compilation database
+     */
+    std::vector<std::string> getCompilationDBFiles() const;
+
+    /**
+     * @copydoc
+     */
     virtual void execute() override;
 
+    /**
+     * @brief Get the list of source file paths to be analyzed.
+     * @return list of source files
+     */
+    std::vector<std::string> getSourceFiles() const;
+
+    /**
+     * @brief Set the list of source file paths to be analyzed.
+     * @warning If a source file path is not in compilation database there can be errors while execution
+     * @param sourceFiles list of source file paths
+     */
+    void setSourceFiles(const std::vector<std::string>& sourceFiles);
+
+
 private:
-    const std::string compilationDatabaseDir;
-    const std::vector<std::string> sourceFiles;
+    /**
+     * @brief Current initialization status.
+     */
+    InitStatus initStatus;
+
+    /**
+     * @brief Pointer to compilation database.
+     */
+    std::unique_ptr<clang::tooling::CompilationDatabase> database;
+
+    /**
+     * @brief Source file paths to be analyzed.
+     */
+    std::vector<std::string> sourceFiles;
 };
 
-
+}  // namespace language::cpp
 #endif  // STATICCPPCOUPLING_CLANGCOUPLINGFINDER_HPP
