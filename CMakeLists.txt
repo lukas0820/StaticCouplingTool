@@ -3,9 +3,11 @@ PROJECT(StaticCouplingAnalyzer CXX)
 
 SET(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-SET(CMAKE_CXX_STANDARD 14)
+SET(CMAKE_CXX_STANDARD 17)
 SET(CMAKE_CXX_STANDARD_REQUIRED ON)
 SET(LLVM_LINK_COMPONENTS Support)
+
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall")
 
 FIND_PACKAGE(LLVM 12 REQUIRED)
 FIND_PACKAGE(Clang REQUIRED)
@@ -22,7 +24,7 @@ INCLUDE("${CMAKE_CURRENT_LIST_DIR}/filelist.cmake")
 
 ADD_EXECUTABLE(static-coupling-analyser ${SOURCE_FILES})
 
-TARGET_INCLUDE_DIRECTORIES(static-coupling-analyser PRIVATE ${INCLUDEDIRS})
+
 TARGET_LINK_LIBRARIES(static-coupling-analyser
         PRIVATE
         Qt5::Core
@@ -31,5 +33,8 @@ TARGET_LINK_LIBRARIES(static-coupling-analyser
         clangFrontend
         clangSerialization
         clangTooling)
+
+TARGET_INCLUDE_DIRECTORIES(static-coupling-analyser PUBLIC ${INCLUDEDIRS})
+
 
 
