@@ -50,9 +50,13 @@ void ClangCouplingFinder::execute()
 {
     if (getInitStatus() == InitStatus::OK)
     {
+        ExecutionArguments args;
+        args.couplingCallback = [=](coupling::AbstractCoupling* coupling) { this->receiveCallback(coupling); };
+        
+
         clang::tooling::ClangTool tool(*database, database->getAllFiles());
         tool.setPrintErrorMessage(false);
-        tool.run(clang::tooling::newFrontendActionFactory<language::cpp::CouplingFrontendAction>().get());
+        tool.run(CouplingFrontendAction::createFrontendActionFactory(args).get());
     }
 }
 
@@ -78,5 +82,6 @@ void ClangCouplingFinder::setSourceFiles(const std::vector<std::string>& sourceF
 {
     this->sourceFiles = sourceFiles;
 }
+
 
 }  // namespace language::cpp

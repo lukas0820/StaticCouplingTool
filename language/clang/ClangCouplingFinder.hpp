@@ -24,6 +24,12 @@ public:
         NOT_INITIALIZED /*!< init not called yet */
     };
 
+    struct ExecutionArguments
+    {
+        language::CouplingCallback couplingCallback;
+        std::vector<std::string> sourceFileList;
+    };
+
     /**
      * @brief Constructor.
      */
