@@ -30,9 +30,28 @@ public:
         return callee;
     }
 
-private:
+protected:
     std::string caller;
     std::string callee;
+};
+
+class FileCoupling : public AbstractCoupling
+{
+    COUPLING_CLASS
+public:
+    FileCoupling(const std::string& caller, const std::string& callee, const std::string& name = "default")
+    {
+        this->caller = caller;
+        this->callee = callee;
+    }
+
+    const std::string& getFunctionName() const
+    {
+        return functionName;
+    }
+
+private:
+    std::string functionName;
 };
 }  // namespace coupling
 #endif  // STATICCOUPLINGANALYZER_ABSTRACTCOUPLING_HPP

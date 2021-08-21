@@ -5,17 +5,26 @@
 #include <clang/AST/RecursiveASTVisitor.h>
 #include <clang/Basic/FileEntry.h>
 
+#include "ClangCouplingFinder.hpp"
+
 
 namespace language::cpp
 {
 class CouplingVisitor : public clang::RecursiveASTVisitor<CouplingVisitor>
 {
 public:
-    explicit CouplingVisitor(clang::ASTContext* Context);
+    explicit CouplingVisitor(clang::ASTContext* Context, ClangCouplingFinder::ExecutionArguments executionArguments);
 
-    clang::ASTContext* context;
+    void init();
 
     bool VisitCallExpr(clang::CallExpr* call);
+
+    bool isCoupling(const std::string& callee) const;
+
+private:
+    clang::ASTContext* context;
+    std::vector<std::string> sourceFiles;
+    ClangCouplingFinder::ExecutionArguments executionArguments;
 };
 
 }  // namespace language::cpp

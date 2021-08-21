@@ -2,7 +2,10 @@
 
 namespace language::cpp
 {
-CouplingASTConsumer::CouplingASTConsumer(clang::ASTContext* context) : visitor(context) {}
+CouplingASTConsumer::CouplingASTConsumer(clang::ASTContext* context, ClangCouplingFinder::ExecutionArguments args)
+    : visitor(context, args)
+{
+}
 
 
 void CouplingASTConsumer::HandleTranslationUnit(clang::ASTContext& Context)

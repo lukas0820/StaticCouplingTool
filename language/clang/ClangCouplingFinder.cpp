@@ -52,7 +52,7 @@ void ClangCouplingFinder::execute()
     {
         ExecutionArguments args;
         args.couplingCallback = [=](coupling::AbstractCoupling* coupling) { this->receiveCallback(coupling); };
-        
+        args.sourceFileList = this->sourceFiles;
 
         clang::tooling::ClangTool tool(*database, database->getAllFiles());
         tool.setPrintErrorMessage(false);
@@ -81,6 +81,11 @@ std::vector<std::string> ClangCouplingFinder::getSourceFiles() const
 void ClangCouplingFinder::setSourceFiles(const std::vector<std::string>& sourceFiles)
 {
     this->sourceFiles = sourceFiles;
+}
+
+void ClangCouplingFinder::receiveCallback(coupling::AbstractCoupling* coupling)
+{
+    std::cout << coupling->getCaller() << " -> " << coupling->getCallee() << std::endl;
 }
 
 
