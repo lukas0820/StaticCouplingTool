@@ -5,7 +5,7 @@ LIST(APPEND COUPLING_INCLUDEDIRS
 
 ## Add source files
 LIST(APPEND COUPLING_SOURCE_FILES
-        #"${CMAKE_CURRENT_LIST_DIR}/foo.cpp"
+        "${CMAKE_CURRENT_LIST_DIR}/CouplingGraph.cpp"
         )
 
 ## Add subdirectories
