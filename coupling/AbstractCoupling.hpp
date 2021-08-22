@@ -43,6 +43,7 @@ public:
     {
         this->caller = caller;
         this->callee = callee;
+        this->functionName = name;
     }
 
     const std::string& getFunctionName() const

@@ -54,7 +54,7 @@ bool CouplingVisitor::VisitCallExpr(clang::CallExpr* call)
                 if (isCoupling(declLocation.getFileEntry()->getName().str()))
                 {
                     coupling::FileCoupling coupling(callerLocation.getFileEntry()->getName().str(),
-                                                    declLocation.getFileEntry()->getName().str());
+                                                    declLocation.getFileEntry()->getName().str(), funcCall);
 
                     this->executionArguments.couplingCallback(&coupling);
                 }
