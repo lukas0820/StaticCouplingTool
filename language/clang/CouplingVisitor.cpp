@@ -1,5 +1,7 @@
 #include "CouplingVisitor.hpp"
 
+#include <iostream>
+
 using std::string;
 
 using clang::ASTContext;
@@ -67,6 +69,36 @@ bool CouplingVisitor::VisitCallExpr(clang::CallExpr* call)
     }
 
     return true;
+}
+
+bool CouplingVisitor::VisitCXXConstructExpr(clang::CXXConstructExpr* call)
+{
+    clang::FullSourceLoc callerLocation = context->getFullLoc(call->getBeginLoc());
+    clang::FileID fileID = callerLocation.getFileID();
+    unsigned int thisFileID = fileID.getHashValue();
+
+    clang::FullSourceLoc calleeLocation = context->getFullLoc(call->getConstructor()->getBeginLoc());
+    if (thisFileID == 1 && isCoupling(calleeLocation.getFileEntry()->getName().str()))
+    {
+        std::cout << call->getConstructor()->getDeclName().getAsString() << " : "
+                  << callerLocation.getFileEntry()->getName().str() << " -> "
+                  << calleeLocation.getFileEntry()->getName().str() << std::endl;
+    }
+
+
+    return true;
+}
+
+std::string CouplingVisitor::getStatementFileName(clang::Stmt* stmt)
+{
+    std::string fileName = "";
+    if (stmt)
+    {
+        clang::FullSourceLoc location = this->context->getFullLoc(stmt->getBeginLoc());
+        fileName = location.getFileEntry()->getName().str();
+    }
+    
+    return fileName;
 }
 
 

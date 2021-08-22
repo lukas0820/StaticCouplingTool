@@ -19,9 +19,14 @@ public:
 
     bool VisitCallExpr(clang::CallExpr* call);
 
+    bool VisitCXXConstructExpr(clang::CXXConstructExpr* expr);
+
+
     bool isCoupling(const std::string& callee) const;
 
 private:
+    std::string getStatementFileName(clang::Stmt* stmt);
+
     clang::ASTContext* context;
     std::vector<std::string> sourceFiles;
     ClangCouplingFinder::ExecutionArguments executionArguments;
