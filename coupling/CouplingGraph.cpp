@@ -25,6 +25,30 @@ void CouplingGraph::addCoupling(const std::string& callerName, const std::string
     this->adjacencyMatrix[i][j]++;
 }
 
+std::vector<std::string> CouplingGraph::getNodes()
+{
+    return this->nodeNames;
+}
+
+std::vector<CouplingEdge> CouplingGraph::getCoupling()
+{
+    std::vector<CouplingEdge> edges;
+    for (auto i : this->adjacencyMatrix)
+    {
+        for (auto j : i)
+        {
+            if (adjacencyMatrix[i][j] > 0)
+            {
+                CouplingEdge edge;
+                edge.caller = this->nodeNames[i];
+                edge.callee = this->nodeNames[j];
+                edges.push_back(edge);
+            }
+        }
+    }
+
+    return edges;
+}
 size_t CouplingGraph::getIndexOfNode(const std::string& nodeName)
 {
     size_t index = NODE_DOES_NOT_EXIST;

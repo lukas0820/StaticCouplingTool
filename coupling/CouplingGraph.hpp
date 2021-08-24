@@ -11,8 +11,20 @@ namespace coupling
 class CouplingGraph
 {
 public:
+    struct CouplingEdge
+    {
+        std::string caller;
+        std::string callee;
+        size_t couplingCount;
+    };
+
     void addCoupling(const std::string& callerName, const std::string& calleeName);
     void addNode(const std::string& nodeName);
+
+    std::vector<std::string> getNodes();
+
+    std::vector<CouplingEdge> getCoupling();
+
 
 private:
     size_t getIndexOfNode(const std::string& nodeName);
