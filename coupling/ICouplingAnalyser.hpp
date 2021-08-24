@@ -5,9 +5,9 @@
 
 namespace coupling
 {
-class ICouplingAnalyser()
+class ICouplingAnalyser
 {
-    virtual void handleCoupling(AbstractCoupling * coupling) = 0;
-}
+    virtual void handleCoupling(AbstractCoupling* coupling) = 0;
+};
 }  // namespace coupling
 #endif  // STATICCOUPLINGANALYZER_ICOUPLINGANALYSER_H

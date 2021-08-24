@@ -9,14 +9,18 @@
 
 namespace coupling
 {
-#define COUPLING_CLASS                \
-public:                               \
-    static size_t getCouplingTypeId() \
-    {                                 \
-        static int id = 0;            \
-        return (size_t)(&id);         \
+#define COUPLING_CLASS                       \
+public:                                      \
+    static size_t getCouplingClassTypeId()   \
+    {                                        \
+        static int id = 0;                   \
+        return (size_t)(&id);                \
+    }                                        \
+                                             \
+    virtual size_t getCouplingObjectTypeId() \
+    {                                        \
+        return getCouplingClassTypeId();     \
     }
-
 class AbstractCoupling
 {
     COUPLING_CLASS

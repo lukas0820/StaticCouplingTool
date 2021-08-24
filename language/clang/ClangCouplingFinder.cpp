@@ -85,10 +85,11 @@ void ClangCouplingFinder::setSourceFiles(const std::vector<std::string>& sourceF
 
 void ClangCouplingFinder::receiveCallback(coupling::AbstractCoupling* coupling)
 {
-    // coupling::FileCoupling* fileCoupling = (coupling::FileCoupling*)coupling;
-    //     std::cout << fileCoupling->getFunctionName() << " : " << coupling->getCaller() << " -> " <<
-    //     coupling->getCallee()
-    //               << std::endl;
+    size_t id = coupling->getCouplingObjectTypeId();
+    if (this->callbackMap.count(id))
+    {
+        this->callbackMap[id](coupling);
+    }
 }
 
 
