@@ -13,3 +13,4 @@ FixNamespaceComments: true
 ColumnLimit: 120
 AllowShortFunctionsOnASingleLine: Empty
 BreakBeforeBraces: Allman
+AlwaysBreakTemplateDeclarations: Yes
