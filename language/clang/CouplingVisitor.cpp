@@ -2,10 +2,17 @@
 
 #include <iostream>
 
+#include "ContainerUtils.hpp"
+#include "FileUtils.hpp"
+
 using std::string;
 
 using clang::ASTContext;
 using clang::FullSourceLoc;
+
+using utils::ContainerUtils;
+using utils::FileUtils;
+
 
 namespace language
 {
@@ -21,77 +28,87 @@ void CouplingVisitor::init()
 {
     for (std::string s : this->executionArguments.sourceFileList)
     {
-        sourceFiles.push_back(s.substr(0, s.find_last_of(".")));
+        sourceFiles.push_back(FileUtils::removeFileExtension(s));
     }
 }
 
-bool CouplingVisitor::isCoupling(const std::string& callee) const
+
+bool CouplingVisitor::isCoupling(const clang::SourceLocation& caller, const clang::SourceLocation& callee) const
 {
-    std::string fileNameWithoutExtension = callee.substr(0, callee.find_last_of("."));
-    return std::find(this->sourceFiles.begin(), this->sourceFiles.end(), fileNameWithoutExtension) !=
-           this->sourceFiles.end();
+    bool callerNameNotEmpty = false;
+
+    bool calleeNameNotEmpty = false;
+    bool sourceFilesContainsCallee = false;
+
+    bool isCallFromCurrentFile = false;
+
+
+    clang::FullSourceLoc FullLocation = context->getFullLoc(caller);
+    clang::FileID fileID = FullLocation.getFileID();
+    unsigned int thisFileID = fileID.getHashValue();
+    isCallFromCurrentFile = thisFileID == 1;
+
+    std::string callerFileName = getStatementFileName(caller);
+    callerNameNotEmpty = !callerFileName.empty();
+
+
+    std::string calleeFileName = getStatementFileName(callee);
+    std::string fileNameWithoutExtension = FileUtils::removeFileExtension(calleeFileName);
+    calleeNameNotEmpty = !fileNameWithoutExtension.empty();
+    sourceFilesContainsCallee = ContainerUtils::isInVector<std::string>(this->sourceFiles, fileNameWithoutExtension);
+
+
+    return isCallFromCurrentFile && sourceFilesContainsCallee && calleeNameNotEmpty && callerNameNotEmpty;
 }
 
 bool CouplingVisitor::VisitCallExpr(clang::CallExpr* call)
 {
-    clang::FullSourceLoc FullLocation = context->getFullLoc(call->getBeginLoc());
-    clang::FileID fileID = FullLocation.getFileID();
-    unsigned int thisFileID = fileID.getHashValue();
-    if (thisFileID == 1)
+    if (call && call->getDirectCallee())
     {
-        static unsigned int count = 0;
-        count++;
-        clang::FunctionDecl* func_decl;
+        clang::SourceLocation caller = call->getBeginLoc();
+        clang::SourceLocation callee = call->getDirectCallee()->getBeginLoc();
 
-        if (call->getDirectCallee())
+        if (isCoupling(caller, callee))
         {
-            func_decl = call->getDirectCallee();
-            clang::FullSourceLoc callerLocation = context->getFullLoc(call->getBeginLoc());
-            clang::FullSourceLoc declLocation = context->getFullLoc(func_decl->getEndLoc());
+            std::string callerName = getStatementFileName(caller);
+            std::string calleeName = getStatementFileName(callee);
 
-            if (declLocation.getFileEntry() && callerLocation.getFileEntry())
-            {
-                std::string funcCall = func_decl->getNameInfo().getName().getAsString();
-
-                if (isCoupling(declLocation.getFileEntry()->getName().str()))
-                {
-                    coupling::FileCoupling coupling(callerLocation.getFileEntry()->getName().str(),
-                                                    declLocation.getFileEntry()->getName().str(), funcCall);
-
-                    this->executionArguments.couplingCallback(&coupling);
-                }
-            }
+            coupling::FileCoupling coupling(callerName, calleeName);
+            this->executionArguments.couplingCallback(&coupling);
         }
     }
+
 
     return true;
 }
 
 bool CouplingVisitor::VisitCXXConstructExpr(clang::CXXConstructExpr* call)
 {
-    clang::FullSourceLoc callerLocation = context->getFullLoc(call->getBeginLoc());
-    clang::FileID fileID = callerLocation.getFileID();
-    unsigned int thisFileID = fileID.getHashValue();
-
-    clang::FullSourceLoc calleeLocation = context->getFullLoc(call->getConstructor()->getBeginLoc());
-    if (thisFileID == 1 && isCoupling(calleeLocation.getFileEntry()->getName().str()))
+    if (call && call->getConstructor())
     {
-        coupling::FileCoupling coupling(callerLocation.getFileEntry()->getName().str(),
-                                        calleeLocation.getFileEntry()->getName().str());
+        clang::SourceLocation caller = call->getBeginLoc();
+        clang::SourceLocation callee = call->getConstructor()->getBeginLoc();
 
-        this->executionArguments.couplingCallback(&coupling);
+        if (isCoupling(caller, callee))
+        {
+            std::string callerName = getStatementFileName(caller);
+            std::string calleeName = getStatementFileName(callee);
+
+            coupling::FileCoupling coupling(callerName, calleeName);
+            this->executionArguments.couplingCallback(&coupling);
+        }
     }
 
 
     return true;
 }
 
-std::string CouplingVisitor::getStatementFileName(clang::Stmt* stmt)
+std::string CouplingVisitor::getStatementFileName(const clang::SourceLocation& sourceLocation) const
 {
     std::string fileName = "";
-    if (stmt)
+    clang::FullSourceLoc location = this->context->getFullLoc(sourceLocation);
+    if (location.getFileEntry())
     {
-        clang::FullSourceLoc location = this->context->getFullLoc(stmt->getBeginLoc());
         fileName = location.getFileEntry()->getName().str();
     }
 

@@ -22,10 +22,10 @@ public:
     bool VisitCXXConstructExpr(clang::CXXConstructExpr* expr);
 
 
-    bool isCoupling(const std::string& callee) const;
+    bool isCoupling(const clang::SourceLocation&, const clang::SourceLocation& callee) const;
 
 private:
-    std::string getStatementFileName(clang::Stmt* stmt);
+    std::string getStatementFileName(const clang::SourceLocation& location) const;
 
     clang::ASTContext* context;
     std::vector<std::string> sourceFiles;
