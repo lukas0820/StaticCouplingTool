@@ -48,11 +48,11 @@ bool CouplingVisitor::isCoupling(const clang::SourceLocation& caller, const clan
     unsigned int thisFileID = fileID.getHashValue();
     isCallFromCurrentFile = thisFileID == 1;
 
-    std::string callerFileName = getStatementFileName(caller);
+    std::string callerFileName = getSourceLocationFileName(caller);
     callerNameNotEmpty = !callerFileName.empty();
 
 
-    std::string calleeFileName = getStatementFileName(callee);
+    std::string calleeFileName = getSourceLocationFileName(callee);
     std::string fileNameWithoutExtension = FileUtils::removeFileExtension(calleeFileName);
     calleeNameNotEmpty = !fileNameWithoutExtension.empty();
     sourceFilesContainsCallee = ContainerUtils::isInVector<std::string>(this->sourceFiles, fileNameWithoutExtension);
@@ -70,8 +70,8 @@ bool CouplingVisitor::VisitCallExpr(clang::CallExpr* call)
 
         if (isCoupling(caller, callee))
         {
-            std::string callerName = getStatementFileName(caller);
-            std::string calleeName = getStatementFileName(callee);
+            std::string callerName = getSourceLocationFileName(caller);
+            std::string calleeName = getSourceLocationFileName(callee);
 
             coupling::FileCoupling coupling(callerName, calleeName);
             this->executionArguments.couplingCallback(&coupling);
@@ -91,8 +91,8 @@ bool CouplingVisitor::VisitCXXConstructExpr(clang::CXXConstructExpr* call)
 
         if (isCoupling(caller, callee))
         {
-            std::string callerName = getStatementFileName(caller);
-            std::string calleeName = getStatementFileName(callee);
+            std::string callerName = getSourceLocationFileName(caller);
+            std::string calleeName = getSourceLocationFileName(callee);
 
             coupling::FileCoupling coupling(callerName, calleeName);
             this->executionArguments.couplingCallback(&coupling);
@@ -103,7 +103,7 @@ bool CouplingVisitor::VisitCXXConstructExpr(clang::CXXConstructExpr* call)
     return true;
 }
 
-std::string CouplingVisitor::getStatementFileName(const clang::SourceLocation& sourceLocation) const
+std::string CouplingVisitor::getSourceLocationFileName(const clang::SourceLocation& sourceLocation) const
 {
     std::string fileName = "";
     clang::FullSourceLoc location = this->context->getFullLoc(sourceLocation);

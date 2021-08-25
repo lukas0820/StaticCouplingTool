@@ -25,7 +25,7 @@ public:
     bool isCoupling(const clang::SourceLocation&, const clang::SourceLocation& callee) const;
 
 private:
-    std::string getStatementFileName(const clang::SourceLocation& location) const;
+    std::string getSourceLocationFileName(const clang::SourceLocation& sourceLocation) const;
 
     clang::ASTContext* context;
     std::vector<std::string> sourceFiles;
