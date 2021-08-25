@@ -22,7 +22,6 @@ public:
     void addNode(const std::string& nodeName);
 
     std::vector<std::string> getNodes();
-
     std::vector<CouplingEdge> getCoupling();
 
 

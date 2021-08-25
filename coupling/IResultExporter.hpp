@@ -7,6 +7,7 @@ namespace coupling
 {
 class IResultExporter
 {
+public:
     virtual void exportCoupling(const CouplingGraph& couplingGraph) = 0;
 };
 

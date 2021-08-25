@@ -14,11 +14,16 @@ class FileCouplingAnalyser : public ICouplingAnalyser
 public:
     virtual void handleCoupling(AbstractCoupling* coupling);
 
+    virtual void setResultExporter(IResultExporter* exporter);
+
+    virtual void finish();
+
     void init(const std::vector<std::string>& fileList);
 
 
 private:
     CouplingGraph couplingGraph;
+    IResultExporter* resultExporter;
 };
 }  // namespace coupling
 

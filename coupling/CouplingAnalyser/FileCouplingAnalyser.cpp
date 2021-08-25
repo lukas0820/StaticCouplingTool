@@ -16,6 +16,19 @@ void FileCouplingAnalyser::handleCoupling(AbstractCoupling* coupling)
               << std::endl;
 }
 
+void FileCouplingAnalyser::setResultExporter(IResultExporter* exporter)
+{
+    this->resultExporter = exporter;
+}
+
+void FileCouplingAnalyser::finish()
+{
+    if (this->resultExporter)
+    {
+        this->resultExporter->exportCoupling(this->couplingGraph);
+    }
+}
+
 void FileCouplingAnalyser::init(const std::vector<std::string>& fileList)
 {
     for (auto s : fileList)

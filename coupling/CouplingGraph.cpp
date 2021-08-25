@@ -30,18 +30,22 @@ std::vector<std::string> CouplingGraph::getNodes()
     return this->nodeNames;
 }
 
-std::vector<CouplingEdge> CouplingGraph::getCoupling()
+std::vector<CouplingGraph::CouplingEdge> CouplingGraph::getCoupling()
 {
     std::vector<CouplingEdge> edges;
-    for (auto i : this->adjacencyMatrix)
+    for (size_t i = 0; i < this->adjacencyMatrix.size(); i++)
     {
-        for (auto j : i)
+        auto row = this->adjacencyMatrix[i];
+        std::string callerName = this->nodeNames[i];
+        for (size_t j = 0; j < row.size(); j++)
         {
-            if (adjacencyMatrix[i][j] > 0)
+            size_t couplingCount = row[j];
+            if (couplingCount > 0)
             {
                 CouplingEdge edge;
-                edge.caller = this->nodeNames[i];
+                edge.caller = callerName;
                 edge.callee = this->nodeNames[j];
+                edge.couplingCount = couplingCount;
                 edges.push_back(edge);
             }
         }
