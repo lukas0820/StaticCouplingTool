@@ -11,9 +11,10 @@ void FileCouplingAnalyser::handleCoupling(AbstractCoupling* coupling)
         this->couplingGraph.addCoupling(coupling->getCaller(), coupling->getCallee());
     }
 
-    coupling::FileCoupling* fileCoupling = (coupling::FileCoupling*)coupling;
-    std::cout << fileCoupling->getFunctionName() << " : " << coupling->getCaller() << " -> " << coupling->getCallee()
-              << std::endl;
+    //    coupling::FileCoupling* fileCoupling = (coupling::FileCoupling*)coupling;
+    //    std::cout << fileCoupling->getFunctionName() << " : " << coupling->getCaller() << " -> " <<
+    //    coupling->getCallee()
+    //              << std::endl;
 }
 
 void FileCouplingAnalyser::setResultExporter(IResultExporter* exporter)

@@ -60,10 +60,6 @@ bool CouplingVisitor::VisitCallExpr(clang::CallExpr* call)
 
                     this->executionArguments.couplingCallback(&coupling);
                 }
-
-                //                llvm::outs() << funcCall << "\n";
-                //                llvm::outs() << callerLocation.getFileEntry()->getName() << " -> "
-                //                             << declLocation.getFileEntry()->getName() << " " << count << "\n";
             }
         }
     }
@@ -80,9 +76,10 @@ bool CouplingVisitor::VisitCXXConstructExpr(clang::CXXConstructExpr* call)
     clang::FullSourceLoc calleeLocation = context->getFullLoc(call->getConstructor()->getBeginLoc());
     if (thisFileID == 1 && isCoupling(calleeLocation.getFileEntry()->getName().str()))
     {
-        std::cout << call->getConstructor()->getDeclName().getAsString() << " : "
-                  << callerLocation.getFileEntry()->getName().str() << " -> "
-                  << calleeLocation.getFileEntry()->getName().str() << std::endl;
+        coupling::FileCoupling coupling(callerLocation.getFileEntry()->getName().str(),
+                                        calleeLocation.getFileEntry()->getName().str());
+
+        this->executionArguments.couplingCallback(&coupling);
     }
 
 
@@ -97,7 +94,7 @@ std::string CouplingVisitor::getStatementFileName(clang::Stmt* stmt)
         clang::FullSourceLoc location = this->context->getFullLoc(stmt->getBeginLoc());
         fileName = location.getFileEntry()->getName().str();
     }
-    
+
     return fileName;
 }
 

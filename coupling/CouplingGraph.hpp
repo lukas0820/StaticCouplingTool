@@ -21,8 +21,8 @@ public:
     void addCoupling(const std::string& callerName, const std::string& calleeName);
     void addNode(const std::string& nodeName);
 
-    std::vector<std::string> getNodes();
-    std::vector<CouplingEdge> getCoupling();
+    std::vector<std::string> getNodes() const;
+    std::vector<CouplingEdge> getCoupling() const;
 
 
 private:

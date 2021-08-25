@@ -25,12 +25,12 @@ void CouplingGraph::addCoupling(const std::string& callerName, const std::string
     this->adjacencyMatrix[i][j]++;
 }
 
-std::vector<std::string> CouplingGraph::getNodes()
+std::vector<std::string> CouplingGraph::getNodes() const
 {
     return this->nodeNames;
 }
 
-std::vector<CouplingGraph::CouplingEdge> CouplingGraph::getCoupling()
+std::vector<CouplingGraph::CouplingEdge> CouplingGraph::getCoupling() const
 {
     std::vector<CouplingEdge> edges;
     for (size_t i = 0; i < this->adjacencyMatrix.size(); i++)
