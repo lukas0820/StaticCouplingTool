@@ -19,6 +19,7 @@ public:
 
 private:
     CouplingVisitor visitor;
+    ClangCouplingFinder::ExecutionArguments args;
 };
 
 

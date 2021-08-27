@@ -27,7 +27,10 @@ public:
     struct ExecutionArguments
     {
         language::CouplingCallback couplingCallback;
+        std::function<void(const std::string&)> finishedTranslationUnitCallback;
+        std::function<void(const std::string&)> startedTranslationUnitCallback;
         std::vector<std::string> sourceFileList;
+
     };
 
     /**
@@ -81,6 +84,10 @@ public:
 
 private:
     void receiveCallback(coupling::AbstractCoupling* coupling);
+
+    void startedTranslationUnitCallback(const std::string& file);
+
+    void finishedTranslationUnitCallback(const std::string& file);
 
 
 private:

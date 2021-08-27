@@ -53,6 +53,9 @@ void ClangCouplingFinder::execute()
         ExecutionArguments args;
         args.couplingCallback = [=](coupling::AbstractCoupling* coupling) { this->receiveCallback(coupling); };
         args.sourceFileList = this->sourceFiles;
+        args.finishedTranslationUnitCallback = [=](const std::string& file)
+        { this->finishedTranslationUnitCallback(file); };
+
 
         clang::tooling::ClangTool tool(*database, database->getAllFiles());
         tool.setPrintErrorMessage(false);
@@ -90,6 +93,15 @@ void ClangCouplingFinder::receiveCallback(coupling::AbstractCoupling* coupling)
     {
         this->callbackMap[id](coupling);
     }
+}
+
+void ClangCouplingFinder::finishedTranslationUnitCallback(const std::string& file)
+{
+    static int i = 0;
+
+    i++;
+
+    std::cout << "file  " << i << " of " << this->sourceFiles.size() << std::endl;
 }
 
 
