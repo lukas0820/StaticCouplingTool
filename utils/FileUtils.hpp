@@ -9,6 +9,10 @@ class FileUtils
 {
 public:
     static std::string removeFileExtension(const std::string& fileName);
+
+    static std::string getFileNameFromPath(const std::string& fileName);
+
+    static std::string getFileNameWithoutExtensionFromPath(const std::string& fileName);
 };
 
 }  // namespace utils
