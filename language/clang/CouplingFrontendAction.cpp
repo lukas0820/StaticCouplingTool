@@ -13,6 +13,7 @@ CouplingFrontendAction::CouplingFrontendAction(ClangCouplingFinder::ExecutionArg
 std::unique_ptr<clang::ASTConsumer> CouplingFrontendAction::CreateASTConsumer(clang::CompilerInstance& compiler,
                                                                               llvm::StringRef file)
 {
+    compiler.getDiagnostics().setClient(new clang::IgnoringDiagConsumer);
     return std::make_unique<CouplingASTConsumer>(&compiler.getASTContext(), this->executionArguments);
 }
 
