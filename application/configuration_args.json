@@ -1,0 +1,22 @@
+{
+  "base": [
+    {
+      "optionName": "project-path",
+      "shortOptionName": "p",
+      "mandatory": true,
+      "description": "path to folder which contains compilation database"
+    },
+    {
+      "optionName": "language",
+      "shortOptionName": "l",
+      "mandatory": true,
+      "description": "language of project to be analysed"
+    },
+    {
+      "optionName": "config-path",
+      "shortOptionName": "c",
+      "mandatory": false,
+      "description": "path to json file which contains configuration"
+    }
+  ]
+}
