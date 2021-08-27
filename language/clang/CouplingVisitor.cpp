@@ -1,9 +1,8 @@
 #include "CouplingVisitor.hpp"
 
-#include <iostream>
-
 #include "ContainerUtils.hpp"
 #include "FileUtils.hpp"
+#include "iostream"
 
 using std::string;
 
@@ -28,7 +27,7 @@ void CouplingVisitor::init()
 {
     for (std::string s : this->executionArguments.sourceFileList)
     {
-        sourceFiles.push_back(FileUtils::removeFileExtension(s));
+        sourceFiles.push_back(FileUtils::getFileNameWithoutExtensionFromPath(s));
     }
 }
 
@@ -42,7 +41,6 @@ bool CouplingVisitor::isCoupling(const clang::SourceLocation& caller, const clan
 
     bool isCallFromCurrentFile = false;
 
-
     clang::FullSourceLoc FullLocation = context->getFullLoc(caller);
     clang::FileID fileID = FullLocation.getFileID();
     unsigned int thisFileID = fileID.getHashValue();
@@ -51,12 +49,10 @@ bool CouplingVisitor::isCoupling(const clang::SourceLocation& caller, const clan
     std::string callerFileName = getSourceLocationFileName(caller);
     callerNameNotEmpty = !callerFileName.empty();
 
-
     std::string calleeFileName = getSourceLocationFileName(callee);
-    std::string fileNameWithoutExtension = FileUtils::removeFileExtension(calleeFileName);
+    std::string fileNameWithoutExtension = FileUtils::getFileNameWithoutExtensionFromPath(calleeFileName);
     calleeNameNotEmpty = !fileNameWithoutExtension.empty();
     sourceFilesContainsCallee = ContainerUtils::isInVector<std::string>(this->sourceFiles, fileNameWithoutExtension);
-
 
     return isCallFromCurrentFile && sourceFilesContainsCallee && calleeNameNotEmpty && callerNameNotEmpty;
 }
@@ -99,6 +95,26 @@ bool CouplingVisitor::VisitCXXConstructExpr(clang::CXXConstructExpr* call)
         }
     }
 
+
+    return true;
+}
+
+bool CouplingVisitor::VisitDeclRefExpr(clang::DeclRefExpr* call)
+{
+    if (call && call->getReferencedDeclOfCallee())
+    {
+        clang::SourceLocation caller = call->getBeginLoc();
+        clang::SourceLocation callee = call->getReferencedDeclOfCallee()->getBeginLoc();
+
+        if (isCoupling(caller, callee))
+        {
+            std::string callerName = getSourceLocationFileName(caller);
+            std::string calleeName = getSourceLocationFileName(callee);
+
+            coupling::FileCoupling coupling(callerName, calleeName);
+            this->executionArguments.couplingCallback(&coupling);
+        }
+    }
 
     return true;
 }

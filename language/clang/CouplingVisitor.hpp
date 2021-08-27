@@ -21,6 +21,8 @@ public:
 
     bool VisitCXXConstructExpr(clang::CXXConstructExpr* expr);
 
+    bool VisitDeclRefExpr(clang::DeclRefExpr* expr);
+
 
     bool isCoupling(const clang::SourceLocation&, const clang::SourceLocation& callee) const;
 
