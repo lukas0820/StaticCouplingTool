@@ -49,6 +49,13 @@ void ConfigurationArgumentDatabase::loadArguments()
         argument.shortOptionName = obj["shortOptionName"].toString().toStdString();
         argument.mandatory = obj["mandatory"].toBool();
         argument.description = obj["description"].toString().toStdString();
+        argument.defaultValue = obj["default"].toString().toStdString();
+
+        for (auto i : obj["possibleValues"].toArray())
+        {
+            argument.possibleValues.push_back(i.toString().toStdString());
+        }
+
 
         this->argumentMap[optionName] = argument;
     }

@@ -10,7 +10,6 @@ namespace application
 {
 class ConfigurationArgumentDatabase
 {
-
 public:
     struct ConfigurationArgument
     {
@@ -18,6 +17,8 @@ public:
         std::string shortOptionName;
         bool mandatory;
         std::string description;
+        std::string defaultValue;
+        std::vector<std::string> possibleValues;
     };
 
     ConfigurationArgumentDatabase();
@@ -28,6 +29,8 @@ public:
 
 
 private:
+
+
     void loadArguments();
     std::map<std::string, ConfigurationArgument> argumentMap;
 };
