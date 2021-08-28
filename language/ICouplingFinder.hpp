@@ -1,6 +1,8 @@
 #ifndef STATICCPPCOUPLING_ICOUPLINGFINDER_H
 #define STATICCPPCOUPLING_ICOUPLINGFINDER_H
 
+#include <functional>
+
 #include "AbstractCoupling.hpp"
 
 namespace language
@@ -16,9 +18,7 @@ public:
     virtual void execute() = 0;
 
 
-    virtual void registerCouplingCallback(size_t couplingId, CouplingCallback clb) = 0;
-
-    virtual void unregisterCouplingCallback(size_t couplingId) = 0;
+    virtual void registerCouplingCallback(CouplingCallback clb) = 0;
 };
 }  // namespace language
 

@@ -63,18 +63,14 @@ void ClangCouplingFinder::execute()
     }
 }
 
-void ClangCouplingFinder::registerCouplingCallback(size_t couplingId, language::CouplingCallback clb)
+void ClangCouplingFinder::registerCouplingCallback(language::CouplingCallback clb)
 {
     if (clb)
     {
-        this->callbackMap[couplingId] = clb;
+        this->callback = clb;
     }
 }
 
-void ClangCouplingFinder::unregisterCouplingCallback(size_t couplingId)
-{
-    this->callbackMap.erase(couplingId);
-}
 
 std::vector<std::string> ClangCouplingFinder::getSourceFiles() const
 {
@@ -88,10 +84,9 @@ void ClangCouplingFinder::setSourceFiles(const std::vector<std::string>& sourceF
 
 void ClangCouplingFinder::receiveCallback(coupling::AbstractCoupling* coupling)
 {
-    size_t id = coupling->getCouplingObjectTypeId();
-    if (this->callbackMap.count(id))
+    if (this->callback)
     {
-        this->callbackMap[id](coupling);
+        this->callback(coupling);
     }
 }
 

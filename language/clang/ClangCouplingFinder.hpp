@@ -30,7 +30,6 @@ public:
         std::function<void(const std::string&)> finishedTranslationUnitCallback;
         std::function<void(const std::string&)> startedTranslationUnitCallback;
         std::vector<std::string> sourceFileList;
-
     };
 
     /**
@@ -64,9 +63,8 @@ public:
      */
     virtual void execute() override;
 
-    virtual void registerCouplingCallback(size_t couplingId, CouplingCallback clb) override;
+    virtual void registerCouplingCallback(CouplingCallback clb) override;
 
-    virtual void unregisterCouplingCallback(size_t couplingId) override;
 
     /**
      * @brief Get the list of source file paths to be analyzed.
@@ -91,7 +89,7 @@ private:
 
 
 private:
-    std::map<size_t, language::CouplingCallback> callbackMap;
+    language::CouplingCallback callback;
 
     /**
      * @brief Current initialization status.
