@@ -55,6 +55,7 @@ void ClangCouplingFinder::execute()
         args.sourceFileList = this->sourceFiles;
         args.finishedTranslationUnitCallback = [=](const std::string& file)
         { this->finishedTranslationUnitCallback(file); };
+        args.merge = this->merge;
 
 
         clang::tooling::ClangTool tool(*database, database->getAllFiles());
@@ -80,6 +81,11 @@ std::vector<std::string> ClangCouplingFinder::getSourceFiles() const
 void ClangCouplingFinder::setSourceFiles(const std::vector<std::string>& sourceFiles)
 {
     this->sourceFiles = sourceFiles;
+}
+
+void ClangCouplingFinder::mergeHeaderAndSourceFiles(bool merge)
+{
+    this->merge = merge;
 }
 
 void ClangCouplingFinder::receiveCallback(coupling::AbstractCoupling* coupling)

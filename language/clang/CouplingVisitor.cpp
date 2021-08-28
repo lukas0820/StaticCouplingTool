@@ -56,10 +56,14 @@ bool CouplingVisitor::isCoupling(const clang::SourceLocation& caller, const clan
     calleeNameNotEmpty = !fileNameWithoutExtension.empty();
     sourceFilesContainsCallee = ContainerUtils::isInVector<std::string>(this->sourceFiles, fileNameWithoutExtension);
 
+    bool filteredByMergeArgument =
+        this->executionArguments.merge && (FileUtils::getFileNameWithoutExtensionFromPath(callerFileName)) ==
+                                              (FileUtils::getFileNameWithoutExtensionFromPath(calleeFileName));
+
     callInSameFile = callerFileName == calleeFileName;
 
     return isCallFromCurrentFile && sourceFilesContainsCallee && calleeNameNotEmpty && callerNameNotEmpty &&
-           !callInSameFile;
+           !callInSameFile && !filteredByMergeArgument;
 }
 
 bool CouplingVisitor::VisitCallExpr(clang::CallExpr* call)
@@ -121,6 +125,7 @@ bool CouplingVisitor::VisitDeclRefExpr(clang::DeclRefExpr* call)
         }
     }
 
+
     return true;
 }
 
@@ -131,6 +136,14 @@ std::string CouplingVisitor::getSourceLocationFileName(const clang::SourceLocati
     if (location.getFileEntry())
     {
         fileName = location.getFileEntry()->getName().str();
+        if (this->executionArguments.merge)
+        {
+            fileName = utils::FileUtils::getFileNameWithoutExtensionFromPath(fileName);
+        }
+        else
+        {
+            fileName = FileUtils::getFileNameFromPath(fileName);
+        }
     }
 
     return fileName;

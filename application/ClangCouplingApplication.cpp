@@ -1,5 +1,7 @@
 #include "ClangCouplingApplication.hpp"
 
+#include "ConfigurationManager.hpp"
+
 using coupling::IResultExporter;
 using language::cpp::ClangCouplingFinder;
 
@@ -13,6 +15,9 @@ ClangCouplingApplication::ClangCouplingApplication(IResultExporter* exporter)
 bool ClangCouplingApplication::isReadyForExecution()
 {
     ClangCouplingFinder::InitStatus status = this->clangCouplingFinder.init(this->projectFilePath);
+
+    this->clangCouplingFinder.mergeHeaderAndSourceFiles(ConfigurationManager::getInstance()->hasOptionValue("merge"));
+
     std::vector<std::string> fileList = this->clangCouplingFinder.getCompilationDBFiles();
     this->fileCouplingAnalyser.init(fileList);
 

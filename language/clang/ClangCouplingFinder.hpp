@@ -30,6 +30,7 @@ public:
         std::function<void(const std::string&)> finishedTranslationUnitCallback;
         std::function<void(const std::string&)> startedTranslationUnitCallback;
         std::vector<std::string> sourceFileList;
+        bool merge = false;
     };
 
     /**
@@ -80,6 +81,9 @@ public:
     void setSourceFiles(const std::vector<std::string>& sourceFiles);
 
 
+    void mergeHeaderAndSourceFiles(bool merge);
+
+
 private:
     void receiveCallback(coupling::AbstractCoupling* coupling);
 
@@ -90,6 +94,8 @@ private:
 
 private:
     language::CouplingCallback callback;
+
+    bool merge = false;
 
     /**
      * @brief Current initialization status.
