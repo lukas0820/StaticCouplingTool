@@ -30,12 +30,5 @@ void FileCouplingAnalyser::finish()
     }
 }
 
-void FileCouplingAnalyser::init(const std::vector<std::string>& fileList)
-{
-    for (auto s : fileList)
-    {
-        this->couplingGraph.addNode(s);
-    }
-}
 
 }  // namespace coupling

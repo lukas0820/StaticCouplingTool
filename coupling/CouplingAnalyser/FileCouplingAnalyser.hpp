@@ -18,8 +18,6 @@ public:
 
     virtual void finish();
 
-    void init(const std::vector<std::string>& fileList);
-
 
 private:
     CouplingGraph couplingGraph;
