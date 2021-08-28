@@ -46,7 +46,7 @@ ConfigurationManager::ConfigurationManager(int argc, const char** argv) : cliPar
     }
 }
 
-std::vector<std::string> ConfigurationManager::getOptionValues(const std::string& optionName) const
+std::vector<std::string> ConfigurationManager::getOptionValues(const std::string& optionName)
 {
     std::vector<std::string> valueList;
 
@@ -92,13 +92,40 @@ std::vector<std::string> ConfigurationManager::getOptionValues(const std::string
         std::string input = getValidUserInput(configurationArgument);
         returnList.push_back(input);
     }
+
+    if (optionName == "language")
+    {
+        this->argumentDatabase.loadArguments(returnList[0]);
+    }
+
     return returnList;
 }
 
-std::string ConfigurationManager::getOptionValue(const std::string& optionName) const
+std::string ConfigurationManager::getOptionValue(const std::string& optionName)
 {
     auto values = getOptionValues(optionName);
     return (!values.empty()) ? values[0] : "";
+}
+
+bool ConfigurationManager::hasOptionValue(const std::string& optionName)
+{
+    bool found = false;
+    auto configurationArgument = this->argumentDatabase.getConfigurationArgument(optionName);
+    auto valuesCli =
+        this->cliParser.getOptionValues(configurationArgument.optionName, configurationArgument.shortOptionName);
+
+    found = valuesCli.found;
+
+    if (!found)
+    {
+        auto valuesJson = jsonParser.getOptionValues(configurationArgument.optionName);
+        if (!valuesJson.empty())
+        {
+            found = valuesJson[0] == "true";
+        }
+    }
+
+    return found;
 }
 
 bool ConfigurationManager::isValidArgument(

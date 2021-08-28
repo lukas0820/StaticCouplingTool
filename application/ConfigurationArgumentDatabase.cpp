@@ -9,7 +9,7 @@ namespace application
 {
 ConfigurationArgumentDatabase::ConfigurationArgumentDatabase()
 {
-    loadArguments();
+    loadArguments("base");
 }
 
 ConfigurationArgumentDatabase::ConfigurationArgument ConfigurationArgumentDatabase::getConfigurationArgument(
@@ -28,7 +28,7 @@ std::vector<std::string> ConfigurationArgumentDatabase::getAllOptionNames() cons
     return keys;
 }
 
-void ConfigurationArgumentDatabase::loadArguments()
+void ConfigurationArgumentDatabase::loadArguments(const std::string& databaseName)
 {
     QFile file;
 
@@ -37,7 +37,7 @@ void ConfigurationArgumentDatabase::loadArguments()
     auto val = file.readAll();
     file.close();
     QJsonDocument doc = QJsonDocument::fromJson(val);
-    QJsonArray array = doc.object().value("base").toArray();
+    QJsonArray array = doc.object().value(QString::fromStdString(databaseName)).toArray();
 
     foreach (const QJsonValue& value, array)
     {

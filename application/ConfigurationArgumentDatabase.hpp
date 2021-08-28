@@ -27,9 +27,9 @@ public:
 
     std::vector<std::string> getAllOptionNames() const;
 
+    void loadArguments(const std::string& databaseName);
 
 private:
-    void loadArguments();
     std::map<std::string, ConfigurationArgument> argumentMap;
 };
 

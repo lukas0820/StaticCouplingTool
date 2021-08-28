@@ -17,11 +17,11 @@ public:
 
     static ConfigurationManager* getInstance();
 
-    std::vector<std::string> getOptionValues(const std::string& optionName) const;
+    std::vector<std::string> getOptionValues(const std::string& optionName);
 
-    std::string getOptionValue(const std::string& optionName) const;
+    std::string getOptionValue(const std::string& optionName);
 
-    bool hasOptionValue(const std::string& optionName) const;
+    bool hasOptionValue(const std::string& optionName);
 
 
 private:

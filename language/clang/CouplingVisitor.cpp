@@ -41,6 +41,8 @@ bool CouplingVisitor::isCoupling(const clang::SourceLocation& caller, const clan
 
     bool isCallFromCurrentFile = false;
 
+    bool callInSameFile = true;
+
     clang::FullSourceLoc FullLocation = context->getFullLoc(caller);
     clang::FileID fileID = FullLocation.getFileID();
     unsigned int thisFileID = fileID.getHashValue();
@@ -54,7 +56,10 @@ bool CouplingVisitor::isCoupling(const clang::SourceLocation& caller, const clan
     calleeNameNotEmpty = !fileNameWithoutExtension.empty();
     sourceFilesContainsCallee = ContainerUtils::isInVector<std::string>(this->sourceFiles, fileNameWithoutExtension);
 
-    return isCallFromCurrentFile && sourceFilesContainsCallee && calleeNameNotEmpty && callerNameNotEmpty;
+    callInSameFile = callerFileName == calleeFileName;
+
+    return isCallFromCurrentFile && sourceFilesContainsCallee && calleeNameNotEmpty && callerNameNotEmpty &&
+           !callInSameFile;
 }
 
 bool CouplingVisitor::VisitCallExpr(clang::CallExpr* call)
@@ -70,7 +75,7 @@ bool CouplingVisitor::VisitCallExpr(clang::CallExpr* call)
             std::string calleeName = getSourceLocationFileName(callee);
 
             coupling::FileCoupling coupling(callerName, calleeName);
-            this->executionArguments.couplingCallback(&coupling);
+            // this->executionArguments.couplingCallback(&coupling);
         }
     }
 

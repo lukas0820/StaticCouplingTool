@@ -9,20 +9,23 @@ CLIParser::Value CLIParser::getOptionValues(const std::string& optionName, const
 {
     Value values;
 
-    for (int i = 0; i < argc - 1; i++)
+    for (int i = 0; i < argc; i++)
     {
         std::string currentOption(this->argv[i]);
         if (optionNameEqual(currentOption, optionName, shortOptionName))
         {
             values.found = true;
-            for (int j = i; j < argc - 1; j++)
+            if (i < argc - 1)
             {
-                std::string nextValue(argv[j + 1]);
-                if (nextValue.substr(0, 1) == "-")
+                for (int j = i; j < argc - 1; j++)
                 {
-                    break;
+                    std::string nextValue(argv[j + 1]);
+                    if (nextValue.substr(0, 1) == "-")
+                    {
+                        break;
+                    }
+                    values.valueList.push_back(nextValue);
                 }
-                values.valueList.push_back(nextValue);
             }
             break;
         }
