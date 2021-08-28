@@ -1,5 +1,5 @@
-#ifndef STATICCOUPLINGANALYZER_CLIPARSER_H
-#define STATICCOUPLINGANALYZER_CLIPARSER_H
+#ifndef STATICCOUPLINGANALYZER_CLIPARSER_HPP
+#define STATICCOUPLINGANALYZER_CLIPARSER_HPP
 
 #include <QCommandLineParser>
 #include <map>
@@ -18,7 +18,7 @@ public:
     };
 
     CLIParser(int argc, const char** argv);
-    
+
     Value getOptionValues(const std::string& optionName, const std::string& shortOptionName = "") const;
 
 private:
@@ -32,4 +32,4 @@ private:
 }  // namespace application
 
 
-#endif  // STATICCOUPLINGANALYZER_CLIPARSER_H
+#endif  // STATICCOUPLINGANALYZER_CLIPARSER_HPP

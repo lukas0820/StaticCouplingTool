@@ -1,12 +1,12 @@
 
-#include "AbstractCouplingApplication.h"
+#include "AbstractCouplingApplication.hpp"
 
 #include <chrono>
 #include <functional>
 #include <iostream>
 
 #include "AbstractCoupling.hpp"
-#include "ConfigurationManager.h"
+#include "ConfigurationManager.hpp"
 
 using coupling::AbstractCoupling;
 namespace application

@@ -1,4 +1,4 @@
-#include "ClangCouplingApplication.h"
+#include "ClangCouplingApplication.hpp"
 
 using coupling::IResultExporter;
 using language::cpp::ClangCouplingFinder;

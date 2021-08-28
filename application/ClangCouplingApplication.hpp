@@ -1,7 +1,7 @@
-#ifndef STATICCOUPLINGANALYZER_CLANGCOUPLINGAPPLICATION_H
-#define STATICCOUPLINGANALYZER_CLANGCOUPLINGAPPLICATION_H
+#ifndef STATICCOUPLINGANALYZER_CLANGCOUPLINGAPPLICATION_HPP
+#define STATICCOUPLINGANALYZER_CLANGCOUPLINGAPPLICATION_HPP
 
-#include "AbstractCouplingApplication.h"
+#include "AbstractCouplingApplication.hpp"
 #include "ClangCouplingFinder.hpp"
 #include "FileCouplingAnalyser.hpp"
 #include "IResultExporter.hpp"
@@ -23,4 +23,4 @@ private:
 }  // namespace application
 
 
-#endif  // STATICCOUPLINGANALYZER_CLANGCOUPLINGAPPLICATION_H
+#endif  // STATICCOUPLINGANALYZER_CLANGCOUPLINGAPPLICATION_HPP

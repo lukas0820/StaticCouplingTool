@@ -1,12 +1,12 @@
-#ifndef STATICCOUPLINGANALYZER_CONFIGURATIONMANAGER_H
-#define STATICCOUPLINGANALYZER_CONFIGURATIONMANAGER_H
+#ifndef STATICCOUPLINGANALYZER_CONFIGURATIONMANAGER_HPP
+#define STATICCOUPLINGANALYZER_CONFIGURATIONMANAGER_HPP
 
 #include <functional>
 #include <vector>
 
-#include "CLIParser.h"
-#include "ConfigurationArgumentDatabase.h"
-#include "JSONParser.h"
+#include "CLIParser.hpp"
+#include "ConfigurationArgumentDatabase.hpp"
+#include "JSONParser.hpp"
 
 namespace application
 {
@@ -51,4 +51,4 @@ private:
 }  // namespace application
 
 
-#endif  // STATICCOUPLINGANALYZER_CONFIGURATIONMANAGER_H
+#endif  // STATICCOUPLINGANALYZER_CONFIGURATIONMANAGER_HPP

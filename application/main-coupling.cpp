@@ -2,10 +2,10 @@
 #include <clang/Tooling/Tooling.h>
 #include <llvm/Support/CommandLine.h>
 
-#include "ClangCouplingApplication.h"
+#include "ClangCouplingApplication.hpp"
 #include "ClangCouplingFinder.hpp"
 #include "CommandLineExporter.hpp"
-#include "ConfigurationManager.h"
+#include "ConfigurationManager.hpp"
 #include "FileCouplingAnalyser.hpp"
 #include "FileUtils.hpp"
 

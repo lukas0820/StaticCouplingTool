@@ -1,4 +1,4 @@
-#include "ConfigurationArgumentDatabase.h"
+#include "ConfigurationArgumentDatabase.hpp"
 
 #include <QFile>
 #include <QJsonArray>

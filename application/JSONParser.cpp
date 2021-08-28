@@ -1,4 +1,4 @@
-#include "JSONParser.h"
+#include "JSONParser.hpp"
 
 #include <QFile>
 #include <QFileInfo>
@@ -38,10 +38,7 @@ std::vector<std::string> JSONParser::getOptionValues(const std::string& optionNa
     {
         QString optionNameQ = QString::fromStdString(optionName);
         QJsonObject rootObj = doc.object().value("config").toObject();
-
-        int i = rootObj.size();
-        std::string s = rootObj.value(optionNameQ).toString().toStdString();
-        bool test123 = rootObj.contains(optionNameQ);
+        
         if (rootObj.value(optionNameQ).isArray())
         {
             foreach (const QJsonValue& value, rootObj[optionNameQ].toArray())
