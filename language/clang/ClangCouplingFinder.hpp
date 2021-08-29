@@ -83,13 +83,22 @@ public:
 
     void mergeHeaderAndSourceFiles(bool merge);
 
+    void setWhiteList(const std::vector<std::string>& whiteList);
+
+    void setBlackList(const std::vector<std::string>& blackList);
+
 
 private:
+    std::vector<std::string> whiteList;
+    std::vector<std::string> blackList;
+
     void receiveCallback(coupling::AbstractCoupling* coupling);
 
     void startedTranslationUnitCallback(const std::string& file);
 
     void finishedTranslationUnitCallback(const std::string& file);
+
+    std::vector<std::string> getFilesToAnalyse();
 
 
 private:

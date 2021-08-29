@@ -12,10 +12,14 @@ class ClangCouplingApplication : public AbstractCouplingApplication
 public:
     ClangCouplingApplication(coupling::IResultExporter* exporter);
 
+
 private:
     bool isReadyForExecution() override;
 
+    std::vector<std::string> getFileListFromPathList(const std::vector<std::string>& pathList);
+
 private:
+    static const std::vector<std::string> CLANG_FILE_EXTENSIONS;
     language::cpp::ClangCouplingFinder clangCouplingFinder;
     coupling::FileCouplingAnalyser fileCouplingAnalyser;
 };

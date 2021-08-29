@@ -4,9 +4,11 @@
 
 #include <iostream>
 
+#include "ContainerUtils.hpp"
 #include "CouplingFrontendAction.hpp"
 
 using clang::tooling::CompilationDatabase;
+using utils::ContainerUtils;
 
 namespace language::cpp
 {
@@ -58,7 +60,7 @@ void ClangCouplingFinder::execute()
         args.merge = this->merge;
 
 
-        clang::tooling::ClangTool tool(*database, database->getAllFiles());
+        clang::tooling::ClangTool tool(*database, getFilesToAnalyse());
         tool.setPrintErrorMessage(false);
         tool.run(CouplingFrontendAction::createFrontendActionFactory(args).get());
     }
@@ -88,6 +90,16 @@ void ClangCouplingFinder::mergeHeaderAndSourceFiles(bool merge)
     this->merge = merge;
 }
 
+void ClangCouplingFinder::setBlackList(const std::vector<std::string>& blackList)
+{
+    this->blackList = blackList;
+}
+
+void ClangCouplingFinder::setWhiteList(const std::vector<std::string>& whiteList)
+{
+    this->whiteList = whiteList;
+}
+
 void ClangCouplingFinder::receiveCallback(coupling::AbstractCoupling* coupling)
 {
     if (this->callback)
@@ -103,6 +115,44 @@ void ClangCouplingFinder::finishedTranslationUnitCallback(const std::string& fil
     i++;
 
     std::cout << "file  " << i << " of " << this->sourceFiles.size() << std::endl;
+}
+
+std::vector<std::string> ClangCouplingFinder::getFilesToAnalyse()
+{
+    std::vector<std::string> returnList;
+
+    auto whiteListCopy = this->whiteList;
+    auto compilationDBFiles = getCompilationDBFiles();
+
+    if (!whiteListCopy.empty())
+    {
+        for (auto blackListEntry : this->blackList)
+        {
+            if (ContainerUtils::isInVector<std::string>(whiteListCopy, blackListEntry))
+            {
+                whiteListCopy.erase(std::remove(whiteListCopy.begin(), whiteListCopy.end(), blackListEntry),
+                                    whiteListCopy.end());
+            }
+        }
+
+        returnList = whiteListCopy;
+    }
+    else
+    {
+        for (auto blackListEntry : this->blackList)
+        {
+            if (ContainerUtils::isInVector<std::string>(compilationDBFiles, blackListEntry))
+            {
+                compilationDBFiles.erase(
+                    std::remove(compilationDBFiles.begin(), compilationDBFiles.end(), blackListEntry),
+                    compilationDBFiles.end());
+            }
+        }
+
+        returnList = compilationDBFiles;
+    }
+
+    return returnList;
 }
 
 

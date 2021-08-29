@@ -20,6 +20,24 @@
       "shortOptionName": "c",
       "mandatory": false,
       "description": "path to json file which contains configuration"
+    },
+    {
+      "optionName": "blacklist",
+      "shortOptionName": "b",
+      "mandatory": false,
+      "description": "path to a folder or a file which should be ignored"
+    },
+    {
+      "optionName": "whitelist",
+      "shortOptionName": "w",
+      "mandatory": false,
+      "description": "Path to folder or files which should be analysed. All other files are ignored"
+    },
+    {
+      "optionName": "output",
+      "shortOptionName": "o",
+      "mandatory": false,
+      "description": "Path to a folder, where results and configuration should be exported after analysis"
     }
   ],
   "clang": [

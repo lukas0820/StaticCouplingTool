@@ -2,6 +2,8 @@
 #include <clang/Tooling/Tooling.h>
 #include <llvm/Support/CommandLine.h>
 
+#include <iostream>
+
 #include "ClangCouplingApplication.hpp"
 #include "ClangCouplingFinder.hpp"
 #include "CommandLineExporter.hpp"

@@ -1,5 +1,8 @@
 #include "FileUtils.hpp"
 
+#include <QDirIterator>
+#include <QFileInfo>
+
 namespace utils
 {
 std::string FileUtils::removeFileExtension(const std::string& fileName)
@@ -29,5 +32,38 @@ std::string FileUtils::getFileNameWithoutExtensionFromPath(const std::string& fi
     std::string returnString = getFileNameFromPath(fileName);
     returnString = removeFileExtension(returnString);
     return returnString;
+}
+
+bool FileUtils::isFile(const std::string& path)
+{
+    QFileInfo info(QString::fromStdString(path));
+    return info.exists() && info.isFile();
+}
+
+bool FileUtils::isFolder(const std::string& path)
+{
+    QFileInfo info(QString::fromStdString(path));
+    return info.exists() && info.isDir();
+}
+
+std::vector<std::string> FileUtils::getFileListRecursiveFromFolder(const std::string& folderPath,
+                                                                   const std::vector<std::string>& nameFilters)
+{
+    std::vector<std::string> returnList;
+
+    QStringList filters;
+    for (auto s : nameFilters)
+    {
+        filters.append(QString::fromStdString(s));
+    }
+
+    QDirIterator it(QString::fromStdString(folderPath), filters, QDir::Files, QDirIterator::Subdirectories);
+    while (it.hasNext())
+    {
+        returnList.push_back(it.next().toStdString());
+    }
+
+    return returnList;
+
 }
 }  // namespace utils

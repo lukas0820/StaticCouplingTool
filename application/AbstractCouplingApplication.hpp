@@ -23,6 +23,7 @@ protected:
 private:
     void init();
 
+
 protected:
     std::string projectFilePath;
 

@@ -7,7 +7,9 @@
 
 #include "AbstractCoupling.hpp"
 #include "ConfigurationManager.hpp"
+#include "FileUtils.hpp"
 
+using application::ConfigurationManager;
 using coupling::AbstractCoupling;
 namespace application
 {
@@ -20,11 +22,15 @@ AbstractCouplingApplication::AbstractCouplingApplication(language::ICouplingFind
 
 void AbstractCouplingApplication::execute()
 {
-    this->projectFilePath = application::ConfigurationManager::getInstance()->getOptionValue("project-path");
-    this->couplingAnalyser->setResultExporter(this->resultExporter);
+    ConfigurationManager* configManager = ConfigurationManager::getInstance();
+
+
+    this->projectFilePath = configManager->getOptionValue("project-path");
 
     std::function<void(AbstractCoupling*)> analyserCallback = [this](AbstractCoupling* c)
     { this->couplingAnalyser->handleCoupling(c); };
+
+    this->couplingAnalyser->setResultExporter(this->resultExporter);
 
     couplingFinder->registerCouplingCallback(analyserCallback);
 
@@ -46,4 +52,6 @@ void AbstractCouplingApplication::execute()
         std::cout << "Fatal error occured. Please check your configuration and restart." << std::endl;
     }
 }
+
+
 }  // namespace application
