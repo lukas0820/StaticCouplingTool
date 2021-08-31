@@ -35,7 +35,8 @@ void AbstractCouplingApplication::execute()
     std::string outputPath = configManager->getOptionValue("output");
 
 
-    if (outputPath.empty())
+    bool hasJsonExporter = !outputPath.empty();
+    if (!hasJsonExporter)
     {
         std::cout << "No output path set. Results are output to the command line" << std::endl;
         static coupling::CommandLineExporter clExporter;
@@ -60,8 +61,15 @@ void AbstractCouplingApplication::execute()
         this->couplingFinder->execute();
         this->couplingAnalyser->finish();
 
+
         now = std::chrono::system_clock::now().time_since_epoch();
         size_t end_time = std::chrono::duration_cast<std::chrono::seconds>(now).count();
+
+        if (hasJsonExporter)
+        {
+            coupling::JSONExporter* jsonExporter = (coupling::JSONExporter*)(this->resultExporter);
+            configManager->exportConfiguration(jsonExporter->getPath());
+        }
 
         std::cout << "time: " << end_time - start_time << " seconds" << std::endl;
     }

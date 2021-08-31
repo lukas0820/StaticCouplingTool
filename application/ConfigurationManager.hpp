@@ -6,6 +6,7 @@
 
 #include "CLIParser.hpp"
 #include "ConfigurationArgumentDatabase.hpp"
+#include "ConfigurationExporter.h"
 #include "JSONParser.hpp"
 
 namespace application
@@ -22,6 +23,8 @@ public:
     std::string getOptionValue(const std::string& optionName);
 
     bool hasOptionValue(const std::string& optionName);
+
+    void exportConfiguration(const std::string& exportPath);
 
 
 private:
@@ -46,6 +49,7 @@ private:
     CLIParser cliParser;
     ConfigurationArgumentDatabase argumentDatabase;
     JSONParser jsonParser;
+    ConfigurationExporter configurationExporter;
 };
 
 }  // namespace application

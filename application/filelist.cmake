@@ -14,6 +14,7 @@ LIST(APPEND APPLICATION_SOURCE_FILES
         "${CMAKE_CURRENT_LIST_DIR}/JSONParser.cpp"
         "${CMAKE_CURRENT_LIST_DIR}/AbstractCouplingApplication.cpp"
         "${CMAKE_CURRENT_LIST_DIR}/ClangCouplingApplication.cpp"
+        "${CMAKE_CURRENT_LIST_DIR}/ConfigurationExporter.cpp"
         )
 
 

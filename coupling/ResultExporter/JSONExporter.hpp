@@ -13,6 +13,8 @@ public:
     JSONExporter(const std::string& outputPath);
     void exportCoupling(const CouplingGraph& couplingGraph);
 
+    std::string getPath() const;
+
 private:
     std::string outputPath;
 };

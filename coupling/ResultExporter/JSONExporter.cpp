@@ -67,9 +67,11 @@ void JSONExporter::exportCoupling(const CouplingGraph& couplingGraph)
             i++;
             path = QString::fromStdString(this->outputPath).append("/%1").arg(i);
         }
-
-
+        
         QDir().mkpath(path);
+
+        this->outputPath = path.toStdString();
+
         path = path.append("/results.json");
 
         QFile file(path);
@@ -80,5 +82,10 @@ void JSONExporter::exportCoupling(const CouplingGraph& couplingGraph)
 
         file.close();
     }
+}
+
+std::string JSONExporter::getPath() const
+{
+    return this->outputPath;
 }
 }  // namespace coupling

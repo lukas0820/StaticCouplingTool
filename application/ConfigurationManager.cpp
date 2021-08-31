@@ -98,6 +98,11 @@ std::vector<std::string> ConfigurationManager::getOptionValues(const std::string
         this->argumentDatabase.loadArguments(returnList[0]);
     }
 
+    if (configurationArgument.optionName != "config-path")
+    {
+        this->configurationExporter.addToExportConfiguration(configurationArgument.optionName, returnList);
+    }
+
     return returnList;
 }
 
@@ -125,7 +130,14 @@ bool ConfigurationManager::hasOptionValue(const std::string& optionName)
         }
     }
 
+    this->configurationExporter.addToExportConfiguration(configurationArgument.optionName, found);
+
     return found;
+}
+
+void ConfigurationManager::exportConfiguration(const std::string& exportPath)
+{
+    this->configurationExporter.exportConfiguration(exportPath);
 }
 
 bool ConfigurationManager::isValidArgument(
