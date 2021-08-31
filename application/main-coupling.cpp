@@ -10,6 +10,7 @@
 #include "ConfigurationManager.hpp"
 #include "FileCouplingAnalyser.hpp"
 #include "FileUtils.hpp"
+#include "JSONExporter.hpp"
 
 
 using std::string;
@@ -25,11 +26,8 @@ int main(int argc, const char** argv)
 {
     application::ConfigurationManager::setArguments(argc, argv);
     std::string language = application::ConfigurationManager::getInstance()->getOptionValue("language");
-
-    coupling::CommandLineExporter exporter;
-    application::ClangCouplingApplication application(&exporter);
-
-    application.execute();
+    application::ClangCouplingApplication app;
+    app.execute();
 
     return 0;
 }

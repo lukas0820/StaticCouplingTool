@@ -6,17 +6,18 @@
 #include <iostream>
 
 #include "AbstractCoupling.hpp"
+#include "CommandLineExporter.hpp"
 #include "ConfigurationManager.hpp"
 #include "FileUtils.hpp"
+#include "JSONExporter.hpp"
 
 using application::ConfigurationManager;
 using coupling::AbstractCoupling;
 namespace application
 {
 AbstractCouplingApplication::AbstractCouplingApplication(language::ICouplingFinder* couplingFinder,
-                                                         coupling::ICouplingAnalyser* analyser,
-                                                         coupling::IResultExporter* exporter)
-    : couplingFinder(couplingFinder), couplingAnalyser(analyser), resultExporter(exporter)
+                                                         coupling::ICouplingAnalyser* analyser)
+    : couplingFinder(couplingFinder), couplingAnalyser(analyser), resultExporter(nullptr)
 {
 }
 
@@ -26,9 +27,26 @@ void AbstractCouplingApplication::execute()
 
 
     this->projectFilePath = configManager->getOptionValue("project-path");
+    std::cout << "Project path to analyze set to " << this->projectFilePath << std::endl;
 
     std::function<void(AbstractCoupling*)> analyserCallback = [this](AbstractCoupling* c)
     { this->couplingAnalyser->handleCoupling(c); };
+
+    std::string outputPath = configManager->getOptionValue("output");
+
+
+    if (outputPath.empty())
+    {
+        std::cout << "No output path set. Results are output to the command line" << std::endl;
+        static coupling::CommandLineExporter clExporter;
+        this->resultExporter = &clExporter;
+    }
+    else
+    {
+        std::cout << "Output path set to " << outputPath << std::endl;
+        static coupling::JSONExporter jsonExporter(outputPath);
+        this->resultExporter = &jsonExporter;
+    }
 
     this->couplingAnalyser->setResultExporter(this->resultExporter);
 

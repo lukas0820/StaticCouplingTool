@@ -11,8 +11,7 @@ namespace application
 class AbstractCouplingApplication
 {
 public:
-    AbstractCouplingApplication(language::ICouplingFinder* couplingFinder, coupling::ICouplingAnalyser* analyser,
-                                coupling::IResultExporter* exporter);
+    AbstractCouplingApplication(language::ICouplingFinder* couplingFinder, coupling::ICouplingAnalyser* analyser);
 
     void execute();
 

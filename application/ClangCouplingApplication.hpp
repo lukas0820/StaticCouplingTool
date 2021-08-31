@@ -10,7 +10,7 @@ namespace application
 class ClangCouplingApplication : public AbstractCouplingApplication
 {
 public:
-    ClangCouplingApplication(coupling::IResultExporter* exporter);
+    ClangCouplingApplication();
 
 
 private:

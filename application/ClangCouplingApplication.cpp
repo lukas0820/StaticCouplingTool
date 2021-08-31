@@ -13,8 +13,8 @@ namespace application
 {
 const std::vector<std::string> ClangCouplingApplication::CLANG_FILE_EXTENSIONS = {"*.h", "*.hpp", "*.c", "*.cpp"};
 
-ClangCouplingApplication::ClangCouplingApplication(IResultExporter* exporter)
-    : AbstractCouplingApplication(&this->clangCouplingFinder, &this->fileCouplingAnalyser, exporter)
+ClangCouplingApplication::ClangCouplingApplication()
+    : AbstractCouplingApplication(&this->clangCouplingFinder, &this->fileCouplingAnalyser)
 {
 }
 
