@@ -1,4 +1,4 @@
-#include "ConfigurationExporter.h"
+#include "ConfigurationExporter.hpp"
 
 #include <QDir>
 #include <QFile>

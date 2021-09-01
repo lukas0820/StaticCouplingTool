@@ -6,7 +6,7 @@
 
 #include "CLIParser.hpp"
 #include "ConfigurationArgumentDatabase.hpp"
-#include "ConfigurationExporter.h"
+#include "ConfigurationExporter.hpp"
 #include "JSONParser.hpp"
 
 namespace application
