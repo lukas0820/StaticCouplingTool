@@ -65,7 +65,9 @@ public:
     virtual void execute() override;
 
     virtual void registerCouplingCallback(CouplingCallback clb) override;
-    
+
+    virtual void registerProgressCallback(ProgressCallback clb) override;
+
     void mergeHeaderAndSourceFiles(bool merge);
 
     void setWhiteList(const std::vector<std::string>& whiteList);
@@ -88,6 +90,8 @@ private:
 
 private:
     language::CouplingCallback callback;
+
+    language::ProgressCallback  progressCallback;
 
     bool merge = false;
 

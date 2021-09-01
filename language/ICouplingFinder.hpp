@@ -8,6 +8,7 @@
 namespace language
 {
 typedef std::function<void(coupling::AbstractCoupling*)> CouplingCallback;
+typedef std::function<void(size_t, size_t, const std::string&)> ProgressCallback;
 
 class ICouplingFinder
 {
@@ -19,6 +20,8 @@ public:
 
 
     virtual void registerCouplingCallback(CouplingCallback clb) = 0;
+
+    virtual void registerProgressCallback(ProgressCallback clb) = 0;
 };
 }  // namespace language
 

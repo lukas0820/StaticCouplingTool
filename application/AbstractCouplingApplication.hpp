@@ -18,6 +18,8 @@ public:
 protected:
     virtual bool isReadyForExecution() = 0;
 
+    virtual void showProgressBar(size_t currentFileNumber, size_t fileCount, const std::string& message);
+
 
 private:
     void init();

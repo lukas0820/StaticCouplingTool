@@ -74,6 +74,14 @@ void ClangCouplingFinder::registerCouplingCallback(language::CouplingCallback cl
     }
 }
 
+void ClangCouplingFinder::registerProgressCallback(ProgressCallback clb)
+{
+    if (clb)
+    {
+        this->progressCallback = clb;
+    }
+}
+
 void ClangCouplingFinder::mergeHeaderAndSourceFiles(bool merge)
 {
     this->merge = merge;
@@ -104,25 +112,10 @@ void ClangCouplingFinder::finishedTranslationUnitCallback(const std::string& fil
 
     i++;
 
-    // std::cout << "file  " << i << " of " << this->sourceFiles.size() << std::endl;
-    float progress = static_cast<float>(i) / static_cast<float>(sourceFileCount);
-
-    int barWidth = 70;
-
-    std::cout << "[";
-    int pos = barWidth * progress;
-    for (int i = 0; i < barWidth; ++i)
+    if(this->progressCallback)
     {
-        if (i < pos)
-            std::cout << "=";
-        else if (i == pos)
-            std::cout << ">";
-        else
-            std::cout << " ";
+        this->progressCallback(i, sourceFileCount, file);
     }
-    std::cout << "] " << int(progress * 100.0) << "% (" << i << " of " << sourceFileCount << " files)"
-              << "\r";
-    std::cout.flush();
 }
 
 std::vector<std::string> ClangCouplingFinder::getFilesToAnalyse()

@@ -32,6 +32,10 @@ void AbstractCouplingApplication::execute()
     std::function<void(AbstractCoupling*)> analyserCallback = [this](AbstractCoupling* c)
     { this->couplingAnalyser->handleCoupling(c); };
 
+    language::ProgressCallback progressCallback = [this](size_t i, size_t j, const std::string& s)
+    { this->showProgressBar(i, j, s); };
+
+
     std::string outputPath = configManager->getOptionValue("output");
 
 
@@ -51,7 +55,8 @@ void AbstractCouplingApplication::execute()
 
     this->couplingAnalyser->setResultExporter(this->resultExporter);
 
-    couplingFinder->registerCouplingCallback(analyserCallback);
+    this->couplingFinder->registerCouplingCallback(analyserCallback);
+    this->couplingFinder->registerProgressCallback(progressCallback);
 
     if (isReadyForExecution())
     {
@@ -59,6 +64,7 @@ void AbstractCouplingApplication::execute()
         size_t start_time = std::chrono::duration_cast<std::chrono::seconds>(now).count();
 
         this->couplingFinder->execute();
+        std::cout << std::endl;
         this->couplingAnalyser->finish();
 
 
@@ -77,6 +83,29 @@ void AbstractCouplingApplication::execute()
     {
         std::cout << "Fatal error occured. Please check your configuration and restart." << std::endl;
     }
+}
+
+void AbstractCouplingApplication::showProgressBar(size_t currentFileNumber, size_t fileCount,
+                                                  const std::string& message)
+{
+    float progress = static_cast<float>(currentFileNumber) / static_cast<float>(fileCount);
+
+    int barWidth = 70;
+
+    std::cout << "[";
+    int pos = barWidth * progress;
+    for (int i = 0; i < barWidth; ++i)
+    {
+        if (i < pos)
+            std::cout << "=";
+        else if (i == pos)
+            std::cout << ">";
+        else
+            std::cout << " ";
+    }
+    std::cout << "] " << int(progress * 100.0) << "% (" << currentFileNumber << " of " << fileCount << " files)"
+              << "\r";
+    std::cout.flush();
 }
 
 
