@@ -27,7 +27,6 @@ void AbstractCouplingApplication::execute()
 
 
     this->projectFilePath = configManager->getOptionValue("project-path");
-    std::cout << "Project path to analyze set to " << this->projectFilePath << std::endl;
 
     std::function<void(AbstractCoupling*)> analyserCallback = [this](AbstractCoupling* c)
     { this->couplingAnalyser->handleCoupling(c); };
@@ -42,13 +41,12 @@ void AbstractCouplingApplication::execute()
     bool hasJsonExporter = !outputPath.empty();
     if (!hasJsonExporter)
     {
-        std::cout << "No output path set. Results are output to the command line" << std::endl;
+        std::cout << "[warn] No output path set. Results are output to the command line" << std::endl;
         static coupling::CommandLineExporter clExporter;
         this->resultExporter = &clExporter;
     }
     else
     {
-        std::cout << "Output path set to " << outputPath << std::endl;
         static coupling::JSONExporter jsonExporter(outputPath);
         this->resultExporter = &jsonExporter;
     }
@@ -63,13 +61,12 @@ void AbstractCouplingApplication::execute()
         auto now = std::chrono::system_clock::now().time_since_epoch();
         size_t start_time = std::chrono::duration_cast<std::chrono::seconds>(now).count();
 
+        std::cout << "[info] Starting analyser" << std::endl;
+
         this->couplingFinder->execute();
         std::cout << std::endl;
+        
         this->couplingAnalyser->finish();
-
-
-        now = std::chrono::system_clock::now().time_since_epoch();
-        size_t end_time = std::chrono::duration_cast<std::chrono::seconds>(now).count();
 
         if (hasJsonExporter)
         {
@@ -77,7 +74,10 @@ void AbstractCouplingApplication::execute()
             configManager->exportConfiguration(jsonExporter->getPath());
         }
 
-        std::cout << "time: " << end_time - start_time << " seconds" << std::endl;
+        now = std::chrono::system_clock::now().time_since_epoch();
+        size_t end_time = std::chrono::duration_cast<std::chrono::seconds>(now).count();
+
+        std::cout << "[info] finished after " << end_time - start_time << " seconds" << std::endl;
     }
     else
     {

@@ -159,10 +159,10 @@ void ConfigurationManager::showUserInputMessage(
 {
     if (!invalidInput.empty())
     {
-        std::cout << invalidInput << " is invalid for option " << configurationArgument.optionName << ". ";
+        std::cout << invalidInput << "[warn] is invalid for option " << configurationArgument.optionName << ". ";
     }
 
-    std::cout << "Please enter " << configurationArgument.description;
+    std::cout << "[conf] Please enter " << configurationArgument.description;
 
     int possibleValueCount = configurationArgument.possibleValues.size();
     if (possibleValueCount > 0)
@@ -178,11 +178,11 @@ void ConfigurationManager::showUserInputMessage(
             }
         }
 
-        std::cout << "] :" << std::endl;
+        std::cout << "] : ";
     }
     else
     {
-        std::cout << ": " << std::endl;
+        std::cout << ": ";
     }
 }
 
