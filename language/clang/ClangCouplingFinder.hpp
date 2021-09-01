@@ -65,22 +65,7 @@ public:
     virtual void execute() override;
 
     virtual void registerCouplingCallback(CouplingCallback clb) override;
-
-
-    /**
-     * @brief Get the list of source file paths to be analyzed.
-     * @return list of source files
-     */
-    std::vector<std::string> getSourceFiles() const;
-
-    /**
-     * @brief Set the list of source file paths to be analyzed.
-     * @warning If a source file path is not in compilation database there can be errors while execution
-     * @param sourceFiles list of source file paths
-     */
-    void setSourceFiles(const std::vector<std::string>& sourceFiles);
-
-
+    
     void mergeHeaderAndSourceFiles(bool merge);
 
     void setWhiteList(const std::vector<std::string>& whiteList);

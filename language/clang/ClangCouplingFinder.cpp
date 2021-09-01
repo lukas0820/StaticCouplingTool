@@ -26,7 +26,6 @@ ClangCouplingFinder::InitStatus ClangCouplingFinder::init(const std::string& com
     }
 
     this->initStatus = status;
-    setSourceFiles(getCompilationDBFiles());
 
     return status;
 }
@@ -52,6 +51,8 @@ void ClangCouplingFinder::execute()
 {
     if (getInitStatus() == InitStatus::OK)
     {
+        this->sourceFiles = getFilesToAnalyse();
+
         ExecutionArguments args;
         args.couplingCallback = [=](coupling::AbstractCoupling* coupling) { this->receiveCallback(coupling); };
         args.sourceFileList = this->sourceFiles;
@@ -59,8 +60,7 @@ void ClangCouplingFinder::execute()
         { this->finishedTranslationUnitCallback(file); };
         args.merge = this->merge;
 
-
-        clang::tooling::ClangTool tool(*database, getFilesToAnalyse());
+        clang::tooling::ClangTool tool(*database, this->sourceFiles);
         tool.setPrintErrorMessage(false);
         tool.run(CouplingFrontendAction::createFrontendActionFactory(args).get());
     }
@@ -72,17 +72,6 @@ void ClangCouplingFinder::registerCouplingCallback(language::CouplingCallback cl
     {
         this->callback = clb;
     }
-}
-
-
-std::vector<std::string> ClangCouplingFinder::getSourceFiles() const
-{
-    return sourceFiles;
-}
-
-void ClangCouplingFinder::setSourceFiles(const std::vector<std::string>& sourceFiles)
-{
-    this->sourceFiles = sourceFiles;
 }
 
 void ClangCouplingFinder::mergeHeaderAndSourceFiles(bool merge)
@@ -111,10 +100,29 @@ void ClangCouplingFinder::receiveCallback(coupling::AbstractCoupling* coupling)
 void ClangCouplingFinder::finishedTranslationUnitCallback(const std::string& file)
 {
     static int i = 0;
+    static int sourceFileCount = this->sourceFiles.size();
 
     i++;
 
-    std::cout << "file  " << i << " of " << this->sourceFiles.size() << std::endl;
+    // std::cout << "file  " << i << " of " << this->sourceFiles.size() << std::endl;
+    float progress = static_cast<float>(i) / static_cast<float>(sourceFileCount);
+
+    int barWidth = 70;
+
+    std::cout << "[";
+    int pos = barWidth * progress;
+    for (int i = 0; i < barWidth; ++i)
+    {
+        if (i < pos)
+            std::cout << "=";
+        else if (i == pos)
+            std::cout << ">";
+        else
+            std::cout << " ";
+    }
+    std::cout << "] " << int(progress * 100.0) << "% (" << i << " of " << sourceFileCount << " files)"
+              << "\r";
+    std::cout.flush();
 }
 
 std::vector<std::string> ClangCouplingFinder::getFilesToAnalyse()

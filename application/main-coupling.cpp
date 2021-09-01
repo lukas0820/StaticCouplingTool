@@ -2,15 +2,12 @@
 #include <clang/Tooling/Tooling.h>
 #include <llvm/Support/CommandLine.h>
 
-#include <iostream>
-
 #include "ClangCouplingApplication.hpp"
 #include "ClangCouplingFinder.hpp"
 #include "CommandLineExporter.hpp"
 #include "ConfigurationManager.hpp"
 #include "FileCouplingAnalyser.hpp"
 #include "FileUtils.hpp"
-#include "JSONExporter.hpp"
 
 
 using std::string;

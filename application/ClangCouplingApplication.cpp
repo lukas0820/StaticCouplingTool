@@ -30,12 +30,6 @@ bool ClangCouplingApplication::isReadyForExecution()
 
     ClangCouplingFinder::InitStatus status = this->clangCouplingFinder.init(this->projectFilePath);
 
-
-    if (!whiteList.empty())
-    {
-        this->clangCouplingFinder.setSourceFiles(whiteList);
-    }
-
     this->clangCouplingFinder.mergeHeaderAndSourceFiles(ConfigurationManager::getInstance()->hasOptionValue("merge"));
     return status == ClangCouplingFinder::InitStatus::OK;
 }
