@@ -90,7 +90,7 @@ void AbstractCouplingApplication::showProgressBar(size_t currentFileNumber, size
 {
     float progress = static_cast<float>(currentFileNumber) / static_cast<float>(fileCount);
 
-    int barWidth = 70;
+    int barWidth = 40;
 
     std::cout << "[";
     int pos = barWidth * progress;
