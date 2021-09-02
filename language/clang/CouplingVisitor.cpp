@@ -2,6 +2,7 @@
 
 #include "ContainerUtils.hpp"
 #include "FileUtils.hpp"
+#include "TypeSourceFinder.h"
 #include "iostream"
 
 using std::string;
@@ -66,26 +67,6 @@ bool CouplingVisitor::isCoupling(const clang::SourceLocation& caller, const clan
            !callInSameFile && !filteredByMergeArgument;
 }
 
-bool CouplingVisitor::VisitCallExpr(clang::CallExpr* call)
-{
-    if (call && call->getDirectCallee())
-    {
-        clang::SourceLocation caller = call->getBeginLoc();
-        clang::SourceLocation callee = call->getDirectCallee()->getBeginLoc();
-
-        if (isCoupling(caller, callee))
-        {
-            std::string callerName = getSourceLocationFileName(caller);
-            std::string calleeName = getSourceLocationFileName(callee);
-
-            coupling::FileCoupling coupling(callerName, calleeName);
-            // this->executionArguments.couplingCallback(&coupling);
-        }
-    }
-
-
-    return true;
-}
 
 bool CouplingVisitor::VisitCXXConstructExpr(clang::CXXConstructExpr* call)
 {
@@ -127,6 +108,37 @@ bool CouplingVisitor::VisitDeclRefExpr(clang::DeclRefExpr* call)
 
 
     return true;
+}
+
+bool CouplingVisitor::VisitCXXRecordDecl(clang::CXXRecordDecl* call)
+{
+    if (isInCurrentFile(call->getBeginLoc()) && call->bases_begin())
+    {
+        clang::SourceLocation caller = call->getBeginLoc();
+
+        for (const auto& item : call->bases())
+        {
+            clang::SourceLocation callee = item.getType()->getAsCXXRecordDecl()->getBeginLoc();
+
+            if (isCoupling(caller, callee))
+            {
+                std::string callerName = getSourceLocationFileName(caller);
+                std::string calleeName = getSourceLocationFileName(callee);
+
+                coupling::FileCoupling coupling(callerName, calleeName);
+                this->executionArguments.couplingCallback(&coupling);
+            }
+        }
+    }
+
+
+    return true;
+}
+
+bool CouplingVisitor::isInCurrentFile(const clang::SourceLocation& sourceLocation) const
+{
+    clang::FullSourceLoc FullLocation = context->getFullLoc(sourceLocation);
+    return FullLocation.getFileID().getHashValue() == 1;
 }
 
 std::string CouplingVisitor::getSourceLocationFileName(const clang::SourceLocation& sourceLocation) const

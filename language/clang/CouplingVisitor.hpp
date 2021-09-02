@@ -16,17 +16,19 @@ public:
     explicit CouplingVisitor(clang::ASTContext* Context, ClangCouplingFinder::ExecutionArguments executionArguments);
 
     void init();
-
-    bool VisitCallExpr(clang::CallExpr* call);
-
+    
     bool VisitCXXConstructExpr(clang::CXXConstructExpr* expr);
 
     bool VisitDeclRefExpr(clang::DeclRefExpr* expr);
 
+    bool VisitCXXRecordDecl(clang::CXXRecordDecl* call);
 
-    bool isCoupling(const clang::SourceLocation&, const clang::SourceLocation& callee) const;
 
 private:
+    bool isCoupling(const clang::SourceLocation&, const clang::SourceLocation& callee) const;
+
+    bool isInCurrentFile(const clang::SourceLocation& sourceLocation) const;
+
     std::string getSourceLocationFileName(const clang::SourceLocation& sourceLocation) const;
 
     clang::ASTContext* context;
