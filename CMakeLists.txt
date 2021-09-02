@@ -1,4 +1,4 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 3.19)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.16)
 PROJECT(StaticCouplingAnalyzer CXX)
 
 SET(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -9,7 +9,7 @@ SET(LLVM_LINK_COMPONENTS Support)
 
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall")
 
-FIND_PACKAGE(LLVM 12 REQUIRED)
+FIND_PACKAGE(LLVM REQUIRED)
 FIND_PACKAGE(Clang REQUIRED)
 FIND_PACKAGE(Qt5Core)
 
@@ -33,7 +33,8 @@ TARGET_LINK_LIBRARIES(static-coupling-analyser
         clangBasic
         clangFrontend
         clangSerialization
-        clangTooling)
+        clangTooling
+        )
 
 TARGET_INCLUDE_DIRECTORIES(static-coupling-analyser PUBLIC ${INCLUDEDIRS})
 
