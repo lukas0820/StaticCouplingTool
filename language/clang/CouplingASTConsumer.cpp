@@ -22,9 +22,9 @@ void CouplingASTConsumer::HandleTranslationUnit(clang::ASTContext& Context)
         this->args.startedTranslationUnitCallback(fileName);
     }
 
-    this->visitor.TraverseDecl(Context.getTranslationUnitDecl());
+    this->visitor.TraverseAST(Context);
 
-    if(this->args.finishedTranslationUnitCallback)
+    if (this->args.finishedTranslationUnitCallback)
     {
         this->args.finishedTranslationUnitCallback(fileName);
     }
