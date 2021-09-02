@@ -22,9 +22,19 @@ using language::cpp::ClangCouplingFinder;
 int main(int argc, const char** argv)
 {
     application::ConfigurationManager::setArguments(argc, argv);
-    std::string language = application::ConfigurationManager::getInstance()->getOptionValue("language");
-    application::ClangCouplingApplication app;
-    app.execute();
+    application::ConfigurationManager* configurationManager = application::ConfigurationManager::getInstance();
+
+    if (configurationManager->hasOptionValue("help"))
+    {
+        configurationManager->showHelp();
+    }
+    else
+    {
+        std::string language = configurationManager->getOptionValue("language");
+        application::ClangCouplingApplication app;
+        app.execute();
+    }
+
 
     return 0;
 }

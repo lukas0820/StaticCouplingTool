@@ -46,7 +46,8 @@ ConfigurationManager::ConfigurationManager(int argc, const char** argv) : cliPar
     }
 }
 
-std::vector<std::string> ConfigurationManager::getOptionValues(const std::string& optionName)
+std::vector<std::string> ConfigurationManager::getOptionValues(const std::string& optionName,
+                                                               bool overrideMandatoryValue)
 {
     std::vector<std::string> valueList;
 
@@ -86,14 +87,15 @@ std::vector<std::string> ConfigurationManager::getOptionValues(const std::string
     }
 
 
-    if (returnList.empty() && configurationArgument.mandatory)
+    bool isMandatory = configurationArgument.mandatory && !overrideMandatoryValue;
+    if (returnList.empty() && isMandatory)
     {
         showUserInputMessage(configurationArgument);
         std::string input = getValidUserInput(configurationArgument);
         returnList.push_back(input);
     }
 
-    if (optionName == "language")
+    if (optionName == "language" && !returnList.empty())
     {
         this->argumentDatabase.loadArguments(returnList[0]);
     }
@@ -106,9 +108,9 @@ std::vector<std::string> ConfigurationManager::getOptionValues(const std::string
     return returnList;
 }
 
-std::string ConfigurationManager::getOptionValue(const std::string& optionName)
+std::string ConfigurationManager::getOptionValue(const std::string& optionName, bool overrideMandatoryValue)
 {
-    auto values = getOptionValues(optionName);
+    auto values = getOptionValues(optionName, overrideMandatoryValue);
     return (!values.empty()) ? values[0] : "";
 }
 
@@ -140,6 +142,25 @@ void ConfigurationManager::exportConfiguration(const std::string& exportPath)
     this->configurationExporter.exportConfiguration(exportPath);
 }
 
+void ConfigurationManager::showHelp()
+{
+    auto language = getOptionValue("language", true);
+    for (auto s : this->argumentDatabase.getAllOptionNames())
+    {
+        auto arg = this->argumentDatabase.getConfigurationArgument(s);
+        std::string space = (arg.optionName.size() > 5) ? "\t" : "\t\t";
+        std::cout << "--" << arg.optionName << space << "-" << arg.shortOptionName << "\t" << arg.description;
+        showPossibleValues(arg);
+        std::cout << std::endl;
+    }
+
+    if (language.empty())
+    {
+        std::cout << std::endl;
+        std::cout << "set a language before using --help to also show language specific help" << std::endl;
+    }
+}
+
 bool ConfigurationManager::isValidArgument(
     const std::string& argument,
     const ConfigurationArgumentDatabase::ConfigurationArgument& configurationArgument) const
@@ -164,26 +185,8 @@ void ConfigurationManager::showUserInputMessage(
 
     std::cout << "[conf] Please enter " << configurationArgument.description;
 
-    int possibleValueCount = configurationArgument.possibleValues.size();
-    if (possibleValueCount > 0)
-    {
-        std::cout << ". Possible values are [";
-        for (int i = 0; i < possibleValueCount; i++)
-
-        {
-            std::cout << configurationArgument.possibleValues[i];
-            if (i + 1 < possibleValueCount)
-            {
-                std::cout << ", ";
-            }
-        }
-
-        std::cout << "] : ";
-    }
-    else
-    {
-        std::cout << ": ";
-    }
+    showPossibleValues(configurationArgument);
+    std::cout << " : ";
 }
 
 std::string ConfigurationManager::getValidUserInput(
@@ -200,5 +203,26 @@ std::string ConfigurationManager::getValidUserInput(
     }
 
     return input;
+}
+
+void ConfigurationManager::showPossibleValues(
+    const ConfigurationArgumentDatabase::ConfigurationArgument& configurationArgument) const
+{
+    int possibleValueCount = configurationArgument.possibleValues.size();
+    if (possibleValueCount > 0)
+    {
+        std::cout << ". Possible values are [";
+        for (int i = 0; i < possibleValueCount; i++)
+
+        {
+            std::cout << configurationArgument.possibleValues[i];
+            if (i + 1 < possibleValueCount)
+            {
+                std::cout << ", ";
+            }
+        }
+
+        std::cout << "]";
+    }
 }
 }  // namespace application

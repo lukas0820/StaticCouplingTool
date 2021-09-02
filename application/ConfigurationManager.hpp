@@ -18,13 +18,15 @@ public:
 
     static ConfigurationManager* getInstance();
 
-    std::vector<std::string> getOptionValues(const std::string& optionName);
+    std::vector<std::string> getOptionValues(const std::string& optionName, bool overrideMandatoryValue = false);
 
-    std::string getOptionValue(const std::string& optionName);
+    std::string getOptionValue(const std::string& optionName, bool overrideMandatoryValue = false);
 
     bool hasOptionValue(const std::string& optionName);
 
     void exportConfiguration(const std::string& exportPath);
+
+    void showHelp();
 
 
 private:
@@ -38,6 +40,8 @@ private:
 
     std::string getValidUserInput(
         const ConfigurationArgumentDatabase::ConfigurationArgument& configurationArgument) const;
+
+    void showPossibleValues(const ConfigurationArgumentDatabase::ConfigurationArgument& configurationArgument) const;
 
 
 private:

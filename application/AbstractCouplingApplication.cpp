@@ -65,7 +65,7 @@ void AbstractCouplingApplication::execute()
 
         this->couplingFinder->execute();
         std::cout << std::endl;
-        
+
         this->couplingAnalyser->finish();
 
         if (hasJsonExporter)
