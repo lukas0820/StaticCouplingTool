@@ -13,4 +13,5 @@ LIST(APPEND LANGUAGE_SPECIFIC_SOURCE_FILES
         "${CMAKE_CURRENT_LIST_DIR}/CouplingASTConsumer.hpp"
         "${CMAKE_CURRENT_LIST_DIR}/CouplingFrontendAction.hpp"
         "${CMAKE_CURRENT_LIST_DIR}/CouplingVisitor.hpp"
+        "${CMAKE_CURRENT_LIST_DIR}/TypeSourceFinder.cpp"
         )
