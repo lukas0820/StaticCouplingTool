@@ -45,7 +45,7 @@ std::vector<std::string> ClangCouplingApplication::getFileListFromPathList(const
         }
         else if (FileUtils::isFolder(pathListEntry))
         {
-            for (auto s : FileUtils::getFileListRecursiveFromFolder("/home/lukas/Documents/static-coupling",
+            for (auto s : FileUtils::getFileListRecursiveFromFolder(pathListEntry,
                                                                     ClangCouplingApplication::CLANG_FILE_EXTENSIONS))
             {
                 returnList.push_back(s);
