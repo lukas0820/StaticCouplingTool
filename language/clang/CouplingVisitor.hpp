@@ -22,6 +22,8 @@ public:
 
     bool VisitCXXRecordDecl(clang::CXXRecordDecl* call);
 
+    bool VisitCXXMemberCallExpr(clang::CXXMemberCallExpr* call);
+
 
 private:
     bool isCoupling(const clang::SourceLocation&, const clang::SourceLocation& callee) const;

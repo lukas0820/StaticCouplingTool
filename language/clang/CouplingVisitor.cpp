@@ -3,6 +3,8 @@
 #include "ContainerUtils.hpp"
 #include "FileUtils.hpp"
 
+#include <iostream>
+
 using std::string;
 
 using clang::ASTContext;
@@ -132,6 +134,28 @@ bool CouplingVisitor::VisitCXXRecordDecl(clang::CXXRecordDecl* call)
 
     return true;
 }
+
+bool CouplingVisitor::VisitCXXMemberCallExpr(clang::CXXMemberCallExpr* call)
+{
+
+    if (call && call->getRecordDecl())
+    {
+        clang::SourceLocation caller = call->getBeginLoc();
+        clang::SourceLocation callee = call->getRecordDecl()->getBeginLoc();
+        std::string callerName = getSourceLocationFileName(caller);
+        std::string calleeName = getSourceLocationFileName(callee);
+
+
+        if (isCoupling(caller, callee))
+        {
+            coupling::FileCoupling coupling(callerName, calleeName);
+            this->executionArguments.couplingCallback(&coupling);
+        }
+    }
+
+    return true;
+}
+
 
 bool CouplingVisitor::isInCurrentFile(const clang::SourceLocation& sourceLocation) const
 {
