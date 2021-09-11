@@ -15,7 +15,7 @@ public:
         return std::find(vector.begin(), vector.end(), value) != vector.end();
     }
 };
-}  // namespace utils
+}  // namespace shared
 
 
 #endif  // STATICCOUPLINGANALYZER_CONTAINTERUTILS_H
