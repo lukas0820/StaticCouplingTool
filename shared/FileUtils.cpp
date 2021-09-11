@@ -3,7 +3,7 @@
 #include <QDirIterator>
 #include <QFileInfo>
 
-namespace utils
+namespace shared
 {
 std::string FileUtils::removeFileExtension(const std::string& fileName)
 {
@@ -66,4 +66,4 @@ std::vector<std::string> FileUtils::getFileListRecursiveFromFolder(const std::st
     return returnList;
 
 }
-}  // namespace utils
+}  // namespace shared

@@ -8,7 +8,7 @@
 #include "CouplingFrontendAction.hpp"
 
 using clang::tooling::CompilationDatabase;
-using utils::ContainerUtils;
+using shared::ContainerUtils;
 
 namespace language::cpp
 {

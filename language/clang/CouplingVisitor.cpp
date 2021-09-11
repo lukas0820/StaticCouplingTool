@@ -11,8 +11,8 @@ using std::string;
 using clang::ASTContext;
 using clang::FullSourceLoc;
 
-using utils::ContainerUtils;
-using utils::FileUtils;
+using shared::ContainerUtils;
+using shared::FileUtils;
 
 
 namespace language
@@ -173,7 +173,7 @@ std::string CouplingVisitor::getSourceLocationFileName(const clang::SourceLocati
         fileName = location.getFileEntry()->getName().str();
         if (this->executionArguments.merge)
         {
-            fileName = utils::FileUtils::getFileNameWithoutExtensionFromPath(fileName);
+            fileName = FileUtils::getFileNameWithoutExtensionFromPath(fileName);
         }
         else
         {

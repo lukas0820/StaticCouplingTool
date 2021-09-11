@@ -6,8 +6,8 @@
 
 using coupling::IResultExporter;
 using language::cpp::ClangCouplingFinder;
-using utils::ContainerUtils;
-using utils::FileUtils;
+using shared::ContainerUtils;
+using shared::FileUtils;
 using configuration::ConfigurationManager;
 
 namespace application
@@ -40,7 +40,7 @@ std::vector<std::string> ClangCouplingApplication::getFileListFromPathList(const
     std::vector<std::string> returnList;
     for (auto pathListEntry : pathList)
     {
-        if (utils::FileUtils::isFile(pathListEntry))
+        if (shared::FileUtils::isFile(pathListEntry))
         {
             returnList.push_back(pathListEntry);
         }

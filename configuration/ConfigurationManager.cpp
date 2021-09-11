@@ -4,7 +4,7 @@
 
 #include "ContainerUtils.hpp"
 
-using utils::ContainerUtils;
+using shared::ContainerUtils;
 
 namespace configuration
 {

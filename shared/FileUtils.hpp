@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-namespace utils
+namespace shared
 {
 class FileUtils
 {
@@ -23,7 +23,7 @@ public:
                                                                    const std::vector<std::string>& nameFilters);
 };
 
-}  // namespace utils
+}  // namespace shared
 
 
 #endif  // STATICCOUPLINGANALYZER_FILEUTILS_H

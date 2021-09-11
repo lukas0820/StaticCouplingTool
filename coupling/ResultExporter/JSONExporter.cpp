@@ -11,7 +11,7 @@
 
 #include "FileUtils.hpp"
 
-using utils::FileUtils;
+using shared::FileUtils;
 
 namespace coupling
 {

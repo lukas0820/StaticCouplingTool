@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <vector>
 
-namespace utils
+namespace shared
 {
 class ContainerUtils
 {
