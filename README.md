@@ -2,8 +2,8 @@
 ### Requirements
 Following packages have to be installed:
 - cmake
-- clang
-- libclang-dev
+- clang-12
+- libclang-12-dev
 - qt5-default
 - ninja-build
 ### Build Project
