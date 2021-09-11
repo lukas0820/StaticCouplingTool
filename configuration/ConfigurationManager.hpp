@@ -9,7 +9,7 @@
 #include "ConfigurationExporter.hpp"
 #include "JSONParser.hpp"
 
-namespace application
+namespace configuration
 {
 class ConfigurationManager
 {

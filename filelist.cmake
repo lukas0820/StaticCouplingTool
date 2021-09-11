@@ -3,6 +3,7 @@ INCLUDE("${CMAKE_CURRENT_LIST_DIR}/language/filelist.cmake")
 INCLUDE("${CMAKE_CURRENT_LIST_DIR}/coupling/filelist.cmake")
 INCLUDE("${CMAKE_CURRENT_LIST_DIR}/application/filelist.cmake")
 INCLUDE("${CMAKE_CURRENT_LIST_DIR}/utils/filelist.cmake")
+INCLUDE("${CMAKE_CURRENT_LIST_DIR}/configuration/filelist.cmake")
 
 ## Add include folders
 LIST(APPEND INCLUDEDIRS

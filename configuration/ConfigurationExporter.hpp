@@ -3,7 +3,7 @@
 
 #include "QJsonObject"
 
-namespace application
+namespace configuration
 {
 class ConfigurationExporter
 {

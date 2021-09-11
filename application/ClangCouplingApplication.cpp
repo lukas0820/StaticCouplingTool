@@ -8,6 +8,7 @@ using coupling::IResultExporter;
 using language::cpp::ClangCouplingFinder;
 using utils::ContainerUtils;
 using utils::FileUtils;
+using configuration::ConfigurationManager;
 
 namespace application
 {

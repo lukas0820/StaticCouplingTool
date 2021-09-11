@@ -1,7 +1,5 @@
 
 #include <clang/Tooling/Tooling.h>
-#include <llvm/Support/CommandLine.h>
-
 #include "ClangCouplingApplication.hpp"
 #include "ClangCouplingFinder.hpp"
 #include "CommandLineExporter.hpp"
@@ -21,8 +19,8 @@ using language::cpp::ClangCouplingFinder;
 
 int main(int argc, const char** argv)
 {
-    application::ConfigurationManager::setArguments(argc, argv);
-    application::ConfigurationManager* configurationManager = application::ConfigurationManager::getInstance();
+    configuration::ConfigurationManager::setArguments(argc, argv);
+    configuration::ConfigurationManager* configurationManager = configuration::ConfigurationManager::getInstance();
 
     if (configurationManager->hasOptionValue("help"))
     {

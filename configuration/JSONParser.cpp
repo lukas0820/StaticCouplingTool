@@ -6,7 +6,7 @@
 #include <QJsonObject>
 #include <QVariant>
 
-namespace application
+namespace configuration
 {
 bool JSONParser::loadJSONDocument(const std::string& absoluteConfigFilePath)
 {

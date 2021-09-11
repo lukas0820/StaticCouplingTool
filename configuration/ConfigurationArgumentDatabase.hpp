@@ -6,7 +6,7 @@
 #include <vector>
 
 
-namespace application
+namespace configuration
 {
 class ConfigurationArgumentDatabase
 {

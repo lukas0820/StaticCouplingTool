@@ -1,6 +1,6 @@
 #include "CLIParser.hpp"
 
-namespace application
+namespace configuration
 {
 CLIParser::CLIParser(int argc, const char** argv) : argc(argc), argv(argv) {}
 

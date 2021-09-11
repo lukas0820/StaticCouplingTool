@@ -5,7 +5,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
-namespace application
+namespace configuration
 {
 ConfigurationArgumentDatabase::ConfigurationArgumentDatabase()
 {

@@ -6,7 +6,7 @@
 #include <QJsonDocument>
 #include <QVariant>
 
-namespace application
+namespace configuration
 {
 void ConfigurationExporter::addToExportConfiguration(const std::string& argumentName,
                                                      const std::vector<std::string>& entrys)

@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 
-namespace application
+namespace configuration
 {
 class CLIParser
 {

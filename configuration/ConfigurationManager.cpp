@@ -6,7 +6,7 @@
 
 using utils::ContainerUtils;
 
-namespace application
+namespace configuration
 {
 int ConfigurationManager::argc = 0;
 const char** ConfigurationManager::argv;

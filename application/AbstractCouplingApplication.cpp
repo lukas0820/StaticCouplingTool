@@ -11,7 +11,7 @@
 #include "FileUtils.hpp"
 #include "JSONExporter.hpp"
 
-using application::ConfigurationManager;
+using configuration::ConfigurationManager;
 using coupling::AbstractCoupling;
 namespace application
 {
