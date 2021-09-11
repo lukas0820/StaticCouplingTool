@@ -81,7 +81,7 @@ bool CouplingVisitor::VisitCXXConstructExpr(clang::CXXConstructExpr* call)
             std::string callerName = getSourceLocationFileName(caller);
             std::string calleeName = getSourceLocationFileName(callee);
 
-            coupling::FileCoupling coupling(callerName, calleeName);
+            shared::FileCoupling coupling(callerName, calleeName);
             this->executionArguments.couplingCallback(&coupling);
         }
     }
@@ -102,7 +102,7 @@ bool CouplingVisitor::VisitDeclRefExpr(clang::DeclRefExpr* call)
             std::string callerName = getSourceLocationFileName(caller);
             std::string calleeName = getSourceLocationFileName(callee);
 
-            coupling::FileCoupling coupling(callerName, calleeName);
+            shared::FileCoupling coupling(callerName, calleeName);
             this->executionArguments.couplingCallback(&coupling);
         }
     }
@@ -126,7 +126,7 @@ bool CouplingVisitor::VisitCXXRecordDecl(clang::CXXRecordDecl* call)
                 std::string callerName = getSourceLocationFileName(caller);
                 std::string calleeName = getSourceLocationFileName(callee);
 
-                coupling::FileCoupling coupling(callerName, calleeName);
+                shared::FileCoupling coupling(callerName, calleeName);
                 this->executionArguments.couplingCallback(&coupling);
             }
         }
@@ -149,7 +149,7 @@ bool CouplingVisitor::VisitCXXMemberCallExpr(clang::CXXMemberCallExpr* call)
 
         if (isCoupling(caller, callee))
         {
-            coupling::FileCoupling coupling(callerName, calleeName);
+            shared::FileCoupling coupling(callerName, calleeName);
             this->executionArguments.couplingCallback(&coupling);
         }
     }

@@ -9,7 +9,7 @@ namespace coupling
 class ICouplingAnalyser
 {
 public:
-    virtual void handleCoupling(AbstractCoupling* coupling) = 0;
+    virtual void handleCoupling(shared::AbstractCoupling* coupling) = 0;
 
     virtual void setResultExporter(IResultExporter* exporter) = 0;
 

@@ -7,7 +7,7 @@
 
 namespace language
 {
-typedef std::function<void(coupling::AbstractCoupling*)> CouplingCallback;
+typedef std::function<void(shared::AbstractCoupling*)> CouplingCallback;
 typedef std::function<void(size_t, size_t, const std::string&)> ProgressCallback;
 
 class ICouplingFinder

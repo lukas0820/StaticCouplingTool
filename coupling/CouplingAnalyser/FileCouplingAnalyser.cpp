@@ -4,7 +4,7 @@
 
 namespace coupling
 {
-void FileCouplingAnalyser::handleCoupling(AbstractCoupling* coupling)
+void FileCouplingAnalyser::handleCoupling(shared::AbstractCoupling* coupling)
 {
     if (coupling)
     {

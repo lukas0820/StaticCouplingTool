@@ -54,7 +54,7 @@ void ClangCouplingFinder::execute()
         this->sourceFiles = getFilesToAnalyse();
 
         ExecutionArguments args;
-        args.couplingCallback = [=](coupling::AbstractCoupling* coupling) { this->receiveCallback(coupling); };
+        args.couplingCallback = [=](shared::AbstractCoupling* coupling) { this->receiveCallback(coupling); };
         args.sourceFileList = this->sourceFiles;
         args.finishedTranslationUnitCallback = [=](const std::string& file)
         { this->finishedTranslationUnitCallback(file); };
@@ -97,7 +97,7 @@ void ClangCouplingFinder::setWhiteList(const std::vector<std::string>& whiteList
     this->whiteList = whiteList;
 }
 
-void ClangCouplingFinder::receiveCallback(coupling::AbstractCoupling* coupling)
+void ClangCouplingFinder::receiveCallback(shared::AbstractCoupling* coupling)
 {
     if (this->callback)
     {

@@ -79,7 +79,7 @@ private:
     std::vector<std::string> whiteList;
     std::vector<std::string> blackList;
 
-    void receiveCallback(coupling::AbstractCoupling* coupling);
+    void receiveCallback(shared::AbstractCoupling* coupling);
 
     void startedTranslationUnitCallback(const std::string& file);
 

@@ -10,7 +10,7 @@
 
 using std::string;
 
-using coupling::AbstractCoupling;
+using shared::AbstractCoupling;
 using coupling::CommandLineExporter;
 using coupling::FileCouplingAnalyser;
 

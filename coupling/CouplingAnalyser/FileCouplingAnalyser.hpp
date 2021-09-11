@@ -12,7 +12,7 @@ namespace coupling
 class FileCouplingAnalyser : public ICouplingAnalyser
 {
 public:
-    virtual void handleCoupling(AbstractCoupling* coupling);
+    virtual void handleCoupling(shared::AbstractCoupling* coupling);
 
     virtual void setResultExporter(IResultExporter* exporter);
 

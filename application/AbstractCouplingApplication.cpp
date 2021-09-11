@@ -12,7 +12,7 @@
 #include "JSONExporter.hpp"
 
 using configuration::ConfigurationManager;
-using coupling::AbstractCoupling;
+using shared::AbstractCoupling;
 namespace application
 {
 AbstractCouplingApplication::AbstractCouplingApplication(language::ICouplingFinder* couplingFinder,

@@ -7,7 +7,7 @@
 
 #include <string>
 
-namespace coupling
+namespace shared
 {
 #define COUPLING_CLASS                       \
 public:                                      \
