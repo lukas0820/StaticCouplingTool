@@ -2,6 +2,7 @@
 
 #include "ContainerUtils.hpp"
 #include "FileUtils.hpp"
+#include <clang/Basic/FileEntry.h>
 
 #include <iostream>
 

@@ -1,4 +1,5 @@
 #include "CouplingASTConsumer.hpp"
+#include <clang/Basic/FileEntry.h>
 
 namespace language::cpp
 {
