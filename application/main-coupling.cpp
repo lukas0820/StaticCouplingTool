@@ -31,8 +31,19 @@ int main(int argc, const char** argv)
     else
     {
         std::string language = configurationManager->getOptionValue("language");
-        application::ClangCouplingApplication app;
-        app.execute();
+        application::AbstractCouplingApplication* app = nullptr;
+        if(language == "clang")
+        {
+            static application::ClangCouplingApplication clangApp;
+            app = &clangApp;
+
+        }
+
+        if(app)
+        {
+            app->execute();
+        }
+
     }
 
 
