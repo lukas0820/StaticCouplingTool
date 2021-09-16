@@ -44,7 +44,7 @@ void JSONExporter::exportCoupling(const CouplingGraph& couplingGraph)
             QString("%1:%2").arg(nodeToIndexMap.at(currentEdge.caller)).arg(QString::fromStdString(currentEdge.caller));
         QString calleeId =
             QString("%1:%2").arg(nodeToIndexMap.at(currentEdge.callee)).arg(QString::fromStdString(currentEdge.callee));
-        jsonEdge.insert("id", QJsonValue::fromVariant(QString("%1::%2").arg(calleeId).arg(calleeId)));
+        jsonEdge.insert("id", QJsonValue::fromVariant(QString("%1::%2").arg(callerId).arg(calleeId)));
         jsonEdge.insert("directed", QJsonValue::fromVariant(true));
         jsonEdge.insert("start", QJsonValue::fromVariant(callerId));
         jsonEdge.insert("end", QJsonValue::fromVariant(calleeId));
@@ -67,7 +67,7 @@ void JSONExporter::exportCoupling(const CouplingGraph& couplingGraph)
             i++;
             path = QString::fromStdString(this->outputPath).append("/%1").arg(i);
         }
-        
+
         QDir().mkpath(path);
 
         this->outputPath = path.toStdString();
