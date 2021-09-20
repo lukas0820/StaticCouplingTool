@@ -14,7 +14,6 @@ def get_node_name_from_id(nodeId):
     return [node["label"] for node in jsonObject['nodes'] if nodeId == node["id"]][0]
 
 G = nx.DiGraph()
-G.add_edges_from([(get_node_name_from_id(edge['start']), get_node_name_from_id(edge['end'])) for edge in jsonObject['edges']])
 G.add_weighted_edges_from([(get_node_name_from_id(edge['start']), get_node_name_from_id(edge['end']), edge["weight"]) for edge in jsonObject['edges']])
 
 nx.readwrite.write_gml(G, args.output)
