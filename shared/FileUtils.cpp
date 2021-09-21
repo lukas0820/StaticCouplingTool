@@ -60,10 +60,23 @@ std::vector<std::string> FileUtils::getFileListRecursiveFromFolder(const std::st
     QDirIterator it(QString::fromStdString(folderPath), filters, QDir::Files, QDirIterator::Subdirectories);
     while (it.hasNext())
     {
-        returnList.push_back(it.next().toStdString());
+        QFileInfo file(it.next());
+        returnList.push_back(file.absoluteFilePath().toStdString());
     }
 
     return returnList;
-
 }
+
+std::string FileUtils::getAbsoluteFilePath(const std::string& path)
+{
+    std::string returnString = "";
+    if (isFile(path))
+    {
+        QFileInfo info(QString::fromStdString(path));
+        returnString = info.absoluteFilePath().toStdString();
+    }
+    
+    return returnString;
+}
+
 }  // namespace shared

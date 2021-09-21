@@ -21,6 +21,7 @@ public:
 
     static std::vector<std::string> getFileListRecursiveFromFolder(const std::string& folderPath,
                                                                    const std::vector<std::string>& nameFilters);
+    static std::string getAbsoluteFilePath(const std::string& path);
 };
 
 }  // namespace shared

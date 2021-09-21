@@ -4,11 +4,11 @@
 #include "ContainerUtils.hpp"
 #include "FileUtils.hpp"
 
+using configuration::ConfigurationManager;
 using coupling::IResultExporter;
 using language::cpp::ClangCouplingFinder;
 using shared::ContainerUtils;
 using shared::FileUtils;
-using configuration::ConfigurationManager;
 
 namespace application
 {
@@ -42,7 +42,7 @@ std::vector<std::string> ClangCouplingApplication::getFileListFromPathList(const
     {
         if (shared::FileUtils::isFile(pathListEntry))
         {
-            returnList.push_back(pathListEntry);
+            returnList.push_back(shared::FileUtils::getAbsoluteFilePath(pathListEntry));
         }
         else if (FileUtils::isFolder(pathListEntry))
         {
