@@ -5,13 +5,12 @@ Following packages have to be installed:
 - clang-12
 - libclang-12-dev
 - qt5-default
-- ninja-build
+- make
 ### Build Project
 Example build with Ninja:
 
     $ mkdir build && cd build
-    $ cmake -G Ninja .. && ninja
-Alternatively, the project can also be build with another cmake generator than Ninja, then Ninja has to be replaced in the command above and ninja-build is not a requirement any more
+    $ cmake -G "Unix Makefiles" .. && make
 ### Execute
 The analyser can be executed within the build folder with:
 
