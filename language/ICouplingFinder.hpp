@@ -19,8 +19,16 @@ public:
     virtual void execute() = 0;
 
 
+    /**
+     * @brief register a callback function that handle the found coupling objects.
+     * @param clb callback function
+     */
     virtual void registerCouplingCallback(CouplingCallback clb) = 0;
 
+    /**
+     * @brief register a callback function that handle the current analyse progress.
+     * @param clb
+     */
     virtual void registerProgressCallback(ProgressCallback clb) = 0;
 };
 }  // namespace language

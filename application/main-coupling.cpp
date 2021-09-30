@@ -36,6 +36,10 @@ int main(int argc, const char** argv)
             app = &clangApp;
 
         }
+        else{
+
+            //Implementations for other languages can be added here.
+        }
 
         if(app)
         {

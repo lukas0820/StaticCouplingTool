@@ -12,10 +12,20 @@ namespace coupling
 class FileCouplingAnalyser : public ICouplingAnalyser
 {
 public:
+
+    /**
+     * @copydoc ICouplingAnalyser::handleCoupling()
+     */
     virtual void handleCoupling(shared::AbstractCoupling* coupling);
 
+    /**
+     * @copydoc ICouplingAnalyser::setResultExporter()
+     */
     virtual void setResultExporter(IResultExporter* exporter);
 
+    /**
+     * @copydoc ICouplingAnalyser::finish()
+     */
     virtual void finish();
 
 

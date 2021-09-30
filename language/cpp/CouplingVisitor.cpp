@@ -113,7 +113,7 @@ bool CouplingVisitor::VisitDeclRefExpr(clang::DeclRefExpr* call)
 
 bool CouplingVisitor::VisitCXXRecordDecl(clang::CXXRecordDecl* call)
 {
-    if (isInCurrentFile(call->getBeginLoc()) && call->bases_begin())
+    if (isInCurrentFile(call->getBeginLoc()) && call->hasAnyDependentBases() && call->bases_begin())
     {
         clang::SourceLocation caller = call->getBeginLoc();
 

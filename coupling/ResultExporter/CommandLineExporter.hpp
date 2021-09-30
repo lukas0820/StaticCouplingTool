@@ -7,6 +7,9 @@ namespace coupling
 {
 class CommandLineExporter : public IResultExporter
 {
+    /**
+     * @copydoc IResultExporter::exportCoupling()
+     */
     virtual void exportCoupling(const CouplingGraph& couplingGraph);
 };
 }  // namespace coupling

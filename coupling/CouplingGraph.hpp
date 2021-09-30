@@ -18,10 +18,27 @@ public:
         size_t couplingCount;
     };
 
+    /**
+     * @brief add an edge to this graph.
+     * If the graph does not contain the nodes, they will be added.
+     */
     void addCoupling(const std::string& callerName, const std::string& calleeName);
+
+    /**
+     * add a node to this graph.
+     */
     void addNode(const std::string& nodeName);
 
+    /**
+     * @brief get all Nodes.
+     * @return List of all nodes
+     */
     std::vector<std::string> getNodes() const;
+
+    /**
+     * @brief Get all edges.
+     * @return List of all edges.
+     */
     std::vector<CouplingEdge> getCoupling() const;
 
 

@@ -8,6 +8,10 @@ namespace coupling
 class IResultExporter
 {
 public:
+
+    /**
+     * @brief exports the given coupling graph
+     */
     virtual void exportCoupling(const CouplingGraph& couplingGraph) = 0;
 };
 
