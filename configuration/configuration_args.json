@@ -12,7 +12,7 @@
       "mandatory": true,
       "description": "language of project to be analysed",
       "possibleValues": [
-        "clang"
+        "cpp"
       ]
     },
     {
@@ -46,7 +46,7 @@
       "description": "help option"
     }
   ],
-  "clang": [
+  "cpp": [
     {
       "optionName": "merge",
       "shortOptionName": "m",

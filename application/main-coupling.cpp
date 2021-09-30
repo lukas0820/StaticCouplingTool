@@ -30,7 +30,7 @@ int main(int argc, const char** argv)
     {
         std::string language = configurationManager->getOptionValue("language");
         application::AbstractCouplingApplication* app = nullptr;
-        if(language == "clang")
+        if(language == "cpp")
         {
             static application::ClangCouplingApplication clangApp;
             app = &clangApp;

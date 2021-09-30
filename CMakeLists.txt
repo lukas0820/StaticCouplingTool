@@ -23,10 +23,10 @@ LINK_DIRECTORIES(${LLVM_LIBRARY_DIRS})
 
 INCLUDE("${CMAKE_CURRENT_LIST_DIR}/filelist.cmake")
 
-ADD_EXECUTABLE(static-coupling-analyser ${SOURCE_FILES})
+ADD_EXECUTABLE(StaticCouplingTool ${SOURCE_FILES})
 
 
-TARGET_LINK_LIBRARIES(static-coupling-analyser
+TARGET_LINK_LIBRARIES(StaticCouplingTool
         PRIVATE
         Qt5::Core
         clangAST
@@ -36,7 +36,7 @@ TARGET_LINK_LIBRARIES(static-coupling-analyser
         clangTooling
         )
 
-TARGET_INCLUDE_DIRECTORIES(static-coupling-analyser PUBLIC ${INCLUDEDIRS})
+TARGET_INCLUDE_DIRECTORIES(StaticCouplingTool PUBLIC ${INCLUDEDIRS})
 
 
 

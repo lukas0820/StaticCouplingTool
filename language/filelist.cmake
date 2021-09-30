@@ -9,4 +9,4 @@ LIST(APPEND LANGUAGE_SPECIFIC_SOURCE_FILES
         )
 
 ## Add subdirectories
-INCLUDE("${CMAKE_CURRENT_LIST_DIR}/clang/filelist.cmake")
+INCLUDE("${CMAKE_CURRENT_LIST_DIR}/cpp/filelist.cmake")
