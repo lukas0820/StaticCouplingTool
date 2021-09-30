@@ -7,15 +7,15 @@ Following packages have to be installed:
 - qt5-default
 - make
 ### Build Project
-Example build with Ninja:
+Example build with make:
 
     $ mkdir build && cd build
     $ cmake -G "Unix Makefiles" .. && make
 ### Execute
 The analyser can be executed within the build folder with:
 
-    $ ./static-coupling-analyser
+    $ ./StaticCouplingTool
 
 For help with configuration options use:
 
-    $ ./static-coupling-analyser --help
+    $ ./StaticCouplingTool --help
